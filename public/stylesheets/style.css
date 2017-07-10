@@ -1,8 +1,29 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin: 0px;
+}
+
+.imgBg {
+    background-image: url("/images/image-34.jpeg");
+    height: 100vh;
+    width: 100vw;
+    background-repeat: no-repeat;
+}
+
+.loginBg {
+    background-color: black;
+    border: 1px solid white;
+    opacity: 0.9;
+    color: white;
+    filter: alpha(opacity=90);
+    /* For IE8 and earlier */
+}
+
+.loginBtn {
+    background-color: #544cb5;
+    color: white;
 }
 
 a {
-  color: #00B7FF;
+    color: #544cb5;
 }
