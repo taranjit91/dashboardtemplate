@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/users', function(req, res, next) {
+router.get('/', function(req, res, next) {
     res.render('login', { title: 'WeTraq Login' });
+}).post('/', (req, res, next) => {
+    usersController.signIn(req, res, next);
 });
 
 /* GET dashboard page. */
