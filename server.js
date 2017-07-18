@@ -19,7 +19,10 @@ let server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+// Start node server
+app.listen(app.get('port'), function() {
+    console.log('Node server is running on port ' + app.get('port'));
+});
 server.on('error', onError);
 server.on('listening', onListening);
 

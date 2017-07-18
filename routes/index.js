@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+// require the users controller
+let usersController = require('../controllers/userController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
