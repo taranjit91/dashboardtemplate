@@ -19,7 +19,7 @@ module.exports.signIn = (req, res) => {
         var jsonResponse = (json);
 
         if (jsonResponse.hasOwnProperty('user')) {
-            return res.render('./dashboard', {
+            return res.render('./dashboard_user', {
                 title: 'Dashboard',
                 jsonResponse: jsonResponse,
                 email: jsonResponse.user.primary_email

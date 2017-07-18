@@ -19,10 +19,7 @@ let server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-// Start node server
-app.listen(app.get('port'), function() {
-    console.log('Node server is running on port ' + app.get('port'));
-});
+server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -62,6 +59,7 @@ function onError(error) {
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
             process.exit(1);
             break;
         case 'EADDRINUSE':

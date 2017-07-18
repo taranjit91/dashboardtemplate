@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 
 /* GET dashboard page. */
 router.get('/dashboard', function(req, res, next) {
-    res.render('dashboard', { title: 'Dashboard' });
+    res.render('dashboard_user', { title: 'Dashboard' });
 });
 
 /* GET dashboard page. */
