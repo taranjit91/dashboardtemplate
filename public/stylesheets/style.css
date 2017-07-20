@@ -4,14 +4,14 @@ body {
 }
 
 .imgBg {
-    background-image: url("/images/image-34.jpeg");
+    background-image: url("/images/1.jpg");
     height: 100vh;
     width: 100vw;
     background-repeat: no-repeat;
 }
 
 .loginBg {
-    background-color: black;
+    background-color: #544cb5;
     border: 1px solid white;
     opacity: 0.9;
     color: white;
@@ -20,8 +20,8 @@ body {
 }
 
 .loginBtn {
-    background-color: #544cb5;
-    color: white;
+    background-color: white;
+    color: black;
 }
 
 #map {
@@ -29,5 +29,22 @@ body {
 }
 
 a {
-    color: #544cb5;
+    color: white;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.Absolute-Center {
+    height: 40%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
