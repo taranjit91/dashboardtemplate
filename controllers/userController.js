@@ -71,7 +71,8 @@ module.exports.signIn = (req, res) => {
             return res.render('./dashboard_user', {
                 title: 'Dashboard',
                 jsonResponse: jsonResponse,
-                email: jsonResponse.user.primary_email
+                email: jsonResponse.user.primary_email,
+                devices: jsonResponse.user.device
             });
         } else {
             return res.render('./error', {

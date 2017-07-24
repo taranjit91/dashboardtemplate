@@ -36,27 +36,45 @@
 
                     <!-- /.row -->
 
+
                     <div class="row">
                         <div class="col-lg-12">
-                            <div id="map"></div>
-
                             <% include ./partials/map.ejs %>
                         </div>
                     </div>
+                    <div class="row">
+                        <h3 class="purpleText verticalSpace">My Devices</h3>
+                        <div class="col-lg-12">
+                            <div class="list-group verticalSpace">
+
+                                <% for (let count = 0; count < devices.length; count++) { %>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <%= devices[count].device_name %>
+                                    </a>
+                                    <script>
+                                        addmarker(43.883549, -79.231255);
+                                    </script>
+                                    <% } %>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.row -->
-
-
-
-
-
-
-
             </div>
-        </div>
-        <!-- /.container-fluid -->
+            <!-- /.row -->
 
-        <% include ./partials/scripts.ejs %>
+
+
+
+
+
+
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+    <script src="/javascripts/map.js"></script>
+    <% include ./partials/scripts.ejs %>
+
 </body>
 
 </html>

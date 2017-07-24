@@ -25,7 +25,7 @@ body {
 }
 
 #map {
-    height: 600px;
+    height: 500px;
 }
 
 a {
@@ -47,4 +47,12 @@ a {
     left: 0;
     bottom: 0;
     right: 0;
+}
+
+.purpleText {
+    color: #544cb5
+}
+
+.verticalSpace {
+    margin-top: 3%;
 }
