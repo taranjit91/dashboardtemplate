@@ -23,8 +23,8 @@
          map: map,
          title: 'Test!!'
      });
-
-
+     var m = <%- email %>;
+     alert(m);
  }
 
  function addmarker(lati, lngi) {
@@ -32,6 +32,8 @@
      var myLatLng = {
          lat: lati,
          lng: lngi
+
+
      };
      var marker = new google.maps.Marker({
          position: myLatLng,

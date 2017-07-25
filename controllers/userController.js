@@ -1,5 +1,5 @@
 var fetch = require('node-fetch');
-
+var createHash = require('sha.js');
 // render register page
 module.exports.showRegisterPage = (req, res) => {
     return res.render('auth/register', {
@@ -14,24 +14,33 @@ module.exports.register = (req, res) => {
     var username = req.body.email;
     var password = req.body.password;
     console.log("username >> " + username + " >> " + password);
-    var passwordString = 'Basic ' + new Buffer(password).toString('base64'); // create authorization string
-    console.log('auth >>> ' + auth);
+
+    // create authorization string
+    var sha256 = createHash('sha256');
+    var passwordString = sha256.update(password, 'utf8').digest('hex')
+    console.log(passwordString)
+
+    var data = '{	"user": {"primary_email": "' + username + '","password": "' + passwordString + '","user_type":"C"}}';
+    console.log("data json >> " + data);
+
+
     fetch('http://wetraqapi.azurewebsites.net/register', {
         method: 'POST',
         headers: {
-            Authorization: auth
-        }
-
+            'Content-Type': 'application/json'
+        },
+        body: data
     }).then(function(response) {
 
         return response.json();
     }).then(function(json) {
         var jsonResponse = (json);
-
+        console.log("register api response >> " + jsonResponse);
         if (jsonResponse.hasOwnProperty('user')) {
             return res.render('./dashboard_user', {
                 title: 'Dashboard',
                 jsonResponse: jsonResponse,
+                devices: jsonResponse.user.device,
                 email: jsonResponse.user.primary_email
             });
         } else {
