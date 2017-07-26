@@ -1,7 +1,42 @@
+<label id="devicesJson"><%= JSON.stringify(jsonResponse) %></label>
 <div id="map">
 
 </div>
 
-<script src="/javascripts/map.js"></script>
+
+<script>
+    function initMap() {
+        var htmString = document.getElementById('devicesJson').innerHTML;
+        var json = JSON.parse(htmString);
+        var devicess = json.user.device;
+
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+
+
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: {
+                lat: devicess[0].geofence_latitude,
+                lng: devicess[0].geofence_longitude
+            }
+        });
+
+        for (count = 0; count < devicess.length; count++) {
+            var myLatLng = {
+                lat: devicess[count].geofence_latitude,
+                lng: devicess[count].geofence_longitude
+            };
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+
+                map: map,
+                title: devicess[count].device_name
+            });
+
+        }
+    }
+</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CxwlDf09EE5-hIhqyMRuVZpRlK6K3PE&callback=initMap" async>
 </script>

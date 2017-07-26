@@ -17,4 +17,13 @@ router.get('/register', function(req, res, next) {
 });
 
 
+//  // create a function to check if the user is authenticated
+// module.exports.RequireAuth = (req, res, next) => {
+//   // check if the user is logged in
+//   if(!firebaseAuth.currentUser) {
+//     return res.redirect('/users/login');
+//   }
+//   next();
+// }
+
 module.exports = router;

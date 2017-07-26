@@ -34,7 +34,6 @@
                         </div>
                     </div>
 
-                    <!-- /.row -->
 
 
                     <div class="row">
@@ -48,12 +47,11 @@
                             <div class="list-group verticalSpace">
 
                                 <% for (let count = 0; count < devices.length; count++) { %>
-                                    <a href="#" class="list-group-item list-group-item-action">
+                                    <a href="/devices/<%= devices[count].device_iccid %>" class="list-group-item list-group-item-action">
                                         <%= devices[count].device_name %>
                                     </a>
-                                    <script>
-                                        addmarker(43.883549, -79.231255);
-                                    </script>
+
+
                                     <% } %>
 
                             </div>
@@ -72,7 +70,7 @@
         </div>
     </div>
     <!-- /.container-fluid -->
-    <script src="/javascripts/map.js"></script>
+
     <% include ./partials/scripts.ejs %>
 
 </body>

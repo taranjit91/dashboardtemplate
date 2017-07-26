@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var devices = require('./routes/device');
 var fetch = require('node-fetch');
 
 var app = express();
@@ -25,6 +26,7 @@ app.set('view engine', 'ejs');
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/device', devices);
 
 
 // catch 404 and forward to error handler
