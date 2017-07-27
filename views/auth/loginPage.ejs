@@ -16,6 +16,14 @@
                     <input type="button" class="btn btn-warning" value="Cancel" />
                 </a>
             </fieldset>
+
+            <% if(title == "login failed"){ %>
+                <div class="alert alert-danger alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <strong>Error!</strong>
+                    <%= message%>
+                </div>
+                <% } %>
         </form>
     </div>
 </div>

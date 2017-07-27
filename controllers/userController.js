@@ -84,8 +84,8 @@ module.exports.signIn = (req, res) => {
                 devices: jsonResponse.user.device
             });
         } else {
-            return res.render('./error', {
-                title: "error",
+            return res.render('./login', {
+                title: "login failed",
                 message: jsonResponse.error.msg
             });
         }

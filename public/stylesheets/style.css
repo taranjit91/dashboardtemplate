@@ -60,3 +60,7 @@ a {
 #devicesJson {
     display: none;
 }
+
+.white {
+    color: white;
+}

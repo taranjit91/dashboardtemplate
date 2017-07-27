@@ -5,9 +5,9 @@ module.exports.DisplayEdit = (req, res) => {
 
     // get a reference to the id from the url
     let id = (req.params.id);
-
+    console.log("url>> " + 'api.wetraq.ca/device/' + id);
     // find one game by its id
-    fetch('https://api.wetraq.ca/device/' + id, {
+    fetch('http://api.wetraq.ca/device/' + id, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -18,14 +18,14 @@ module.exports.DisplayEdit = (req, res) => {
         return response.json();
     }).then(function(json) {
         var jsonResponse = (json);
-        console.log("device details >> " + jsonResponse);
-        // if (jsonResponse.hasOwnProperty('user')) {
-        //     return res.render('./dashboard_user', {
-        //         title: 'Dashboard',
-        //         jsonResponse: jsonResponse,
-        //         email: jsonResponse.user.primary_email,
-        //         devices: jsonResponse.user.device
-        //     });
+        console.log("device details >> " + JSON.stringify(jsonResponse));
+
+
+        return res.render('./device/deviceDetails', {
+            title: 'Edit Device',
+            jsonResponse: jsonResponse,
+
+        });
         // } else {
         //     return res.render('./error', {
         //         title: "error",
