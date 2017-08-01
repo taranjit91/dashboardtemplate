@@ -68,10 +68,11 @@ module.exports.signIn = (req, res) => {
         method: 'GET',
         headers: {
             Authorization: auth
-        }
+        },
+        credentials: 'same-origin',
 
     }).then(function(response) {
-
+        console.log(response.headers.get('set-cookie')); // undefined
         return response.json();
     }).then(function(json) {
         var jsonResponse = (json);

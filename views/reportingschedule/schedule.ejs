@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+
+    <% include ../partials/headcontent.ejs %>
+</head>
+
+<body>
+
+
+
+
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-3">
+            <div id="wrapper">
+                <% include ../partials/navBar_user.ejs %>
+            </div>
+        </div>
+        <div class="col-lg-9 divbg_white ">
+
+            <div class="row">
+
+                <div class="weekDays-selector">
+                    <h4 class="text_black">
+                        Select Days </h4>
+                    <h5></h5>
+                    <input type="checkbox" id="weekday-mon" class="weekday" />
+                    <label for="weekday-mon">Mon</label>
+                    <input type="checkbox" id="weekday-tue" class="weekday" />
+                    <label for="weekday-tue">Tues</label>
+                    <input type="checkbox" id="weekday-wed" class="weekday" />
+                    <label for="weekday-wed">Wed</label>
+                    <input type="checkbox" id="weekday-thu" class="weekday" />
+                    <label for="weekday-thu">Thurs</label>
+                    <input type="checkbox" id="weekday-fri" class="weekday" />
+                    <label for="weekday-fri">Fri</label>
+                    <input type="checkbox" id="weekday-sat" class="weekday" />
+                    <label for="weekday-sat">Sat</label>
+                    <input type="checkbox" id="weekday-sun" class="weekday" />
+                    <label for="weekday-sun">Sun<un/label>
+
+           
+        </div>
+        </div>
+        <div class="row">
+        <h5>Frequency(in Hours)</h5>
+
+        <div class="form-group">
+        <label for="sel1">Select list:</label>
+                    <select class="form-control" id="sel1">
+         <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+            </select>
+                </div>
+            </div>
+
+
+            <div>
+                <% include ../partials/timeRangepicker_script.ejs %>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- /.container-fluid -->
+
+    <% include ../partials/scripts.ejs %>
+
+</body>
+
+</html>
