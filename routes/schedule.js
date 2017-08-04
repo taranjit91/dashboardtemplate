@@ -7,7 +7,7 @@ let scheduleController = require('../controllers/scheduleController');
 
 router.get('/', (req, res, next) => {
     scheduleController.Display(req, res);
-}).patch('/', (req, res, next) => {
+}).post('/', (req, res, next) => {
     scheduleController.UpdateSchedule(req, res, next);
 });
 
