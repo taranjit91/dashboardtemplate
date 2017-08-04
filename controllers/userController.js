@@ -1,5 +1,6 @@
 var fetch = require('node-fetch');
 var createHash = require('sha.js');
+var cookie = "test";
 // render register page
 module.exports.showRegisterPage = (req, res) => {
     return res.render('auth/register', {
@@ -59,6 +60,7 @@ module.exports.register = (req, res) => {
 
 // login function 
 module.exports.signIn = (req, res) => {
+
     var username = req.body.email;
     var password = req.body.password;
     console.log("username >> " + username + " >> " + password);
@@ -72,7 +74,8 @@ module.exports.signIn = (req, res) => {
         credentials: 'same-origin',
 
     }).then(function(response) {
-        console.log(response.headers.get('set-cookie')); // undefined
+        cookie = response.headers.get('set-cookie'); // undefined
+        console.log("setting cookie >> " + cookie);
         return response.json();
     }).then(function(json) {
         var jsonResponse = (json);
@@ -82,21 +85,34 @@ module.exports.signIn = (req, res) => {
                 title: 'Dashboard',
                 jsonResponse: jsonResponse,
                 email: jsonResponse.user.primary_email,
-                devices: jsonResponse.user.device
+                devices: jsonResponse.user.device,
+
             });
         } else {
+            cookie = null;
             return res.render('./login', {
                 title: "login failed",
                 message: jsonResponse.error.msg
             });
         }
     }).catch(function(error) {
+        cookie = null;
         return res.render('./error', {
             title: "error",
             message: error
         });
     })
-}
+};
+// get cookie value
+
+
+
+
+module.exports.cookieValue = function() {
+    return cookie;
+};
+
+
 
 
 module.exports.displaySIgnInPage = (req, res) => {

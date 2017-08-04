@@ -1,31 +1,29 @@
 var fetch = require('node-fetch');
-
+var usersController = require('./userController.js');
 
 module.exports.Display = (req, res) => {
-    return res.render('./reportingschedule/schedule', {
+    return res.render('./schedule', {
         title: 'Schedule',
         email: ''
     });
 }
 
 // find the device by id and populate the form
-module.exports.DisplayEdit = (req, res) => {
+module.exports.UpdateSchedule = (req, res) => {
 
+    console.log('on updatre method &&& ');
     // get a reference to the id from the url
-    let id = (req.params.id);
-    console.log("url>> " + 'api.wetraq.ca/device/' + id);
+    // let id = (req.params.id);
+    //   console.log("url>> " + 'api.wetraq.ca/device/' + id + '/schedule');
     // find one game by its id
-    fetch('http://api.wetraq.ca/device/' + id, {
-        method: 'GET',
+    fetch('http://api.wetraq.ca/device/' + '00000000000000000002' + '/schedule', {
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'cookie': "laravel_session=eyJpdiI6ImNOTW5DeUhxNFg2SEVOKzB2MkNPNFE9PSIsInZhbHVlIjoibHFRS1BkVkF4U3Y5M0c3YzMwMGo1MmtEQmpRdnRRRTFhcTFCakxiTU4wVEE0QnVoQVh5bXcza3JoRXFlOEsrVW1c" +
-                "L3lpQm5YbHI4enZnYTFqdWEyMld3PT0iLCJtYWMiOiI1N2RhOWU2MGZjZTRiODA4MGE4YjlhZGM1Mzhl" +
-                "MmZmODA0MmUzYjhmYjUzODQ5MzkwMjE3NmZlYjllYjM0YmIyIn0%3D; expires=Fri, 28-Jul-2017" +
-                "21: 37: 19 GMT;Max - Age = 7200;path = /; HttpOnly"
+            'cookie': usersController.cookieValue()
         },
         credentials: 'same-origin',
-
+        body: '{	"device": {	"is_reporting": true,"reporting_days": [true, true, true, true, true, true, true],	"reporting_start": 0,	"reporting_end": 86400,	"reporting_freq": 600,"reporting_offset": -14400,"next_report": 1501889254	}}'
     }).then(function(response) {
 
         return response.json();

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+
+    <% include ./partials/headcontent.ejs %>
+</head>
+
+<body>
+    <div id="page-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-3">
+                    <div id="wrapper">
+                        <% include ./partials/navBar_user.ejs %>
+
+                    </div>
+                </div>
+                <div class="col-lg-9">
+
+                    <!-- Page Heading -->
+
+
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <% include ./reportingschedule/schedule.ejs %>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+
+
+
+    <!-- /.container-fluid -->
+
+    <% include ./partials/scripts.ejs %>
+
+</body>
+
+</html>

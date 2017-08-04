@@ -7,12 +7,11 @@ let scheduleController = require('../controllers/scheduleController');
 
 router.get('/', (req, res, next) => {
     scheduleController.Display(req, res);
+}).patch('/', (req, res, next) => {
+    scheduleController.UpdateSchedule(req, res, next);
 });
 
-// GET the Game Details page in order to edit a new Game
-router.get('/:id', (req, res, next) => {
-    scheduleController.DisplayEdit(req, res);
-});
+
 
 // //  GET the Game Details page in order to add a new Game
 // router.get('/add', usersController.RequireAuth, (req, res, next) => {
