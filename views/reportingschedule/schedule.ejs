@@ -57,23 +57,31 @@
         <br/>
         <button class=" btn-success btn-lg ">Submit</button>
     </form>
-    <script src="/javascripts/jquery.js ">
-    </script>
 
-    <script src="/javascripts/bootstrap-timepicker.min.js ">
-    </script>
+    <% if(title == "update failed"){ %>
+        <div class="alert alert-danger alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <strong>Error!</strong>
+            <%= message%>
+        </div>
+        <% } %>
+            <script src="/javascripts/jquery.js ">
+            </script>
+
+            <script src="/javascripts/bootstrap-timepicker.min.js ">
+            </script>
 
 
 
 
 
-    <script type="text/javascript">
-        $('#timepicker1').timepicker({
-            showInputs: true
-        });
-        $('#timepicker2').timepicker({
-            showInputs: true
-        });
-    </script>
+            <script type="text/javascript">
+                $('#timepicker1').timepicker({
+                    showInputs: true
+                });
+                $('#timepicker2').timepicker({
+                    showInputs: true
+                });
+            </script>
 
 </div>

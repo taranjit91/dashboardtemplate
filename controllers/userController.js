@@ -1,6 +1,7 @@
 var fetch = require('node-fetch');
 var createHash = require('sha.js');
 var cookie = "test";
+var user = null;
 // render register page
 module.exports.showRegisterPage = (req, res) => {
     return res.render('auth/register', {
@@ -81,6 +82,8 @@ module.exports.signIn = (req, res) => {
         var jsonResponse = (json);
 
         if (jsonResponse.hasOwnProperty('user')) {
+            user = JSON.stringify(jsonResponse);
+            console.log("setting user variable >> " + user);
             return res.render('./dashboard_user', {
                 title: 'Dashboard',
                 jsonResponse: jsonResponse,
@@ -106,7 +109,9 @@ module.exports.signIn = (req, res) => {
 // get cookie value
 
 
-
+module.exports.userDetails = function() {
+    return user;
+};
 
 module.exports.cookieValue = function() {
     return cookie;

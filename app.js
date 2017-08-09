@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var devices = require('./routes/device');
 var schedule = require('./routes/schedule');
+var reports = require('./routes/instantreports');
 var fetch = require('node-fetch');
 
 var app = express();
@@ -29,6 +30,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/device', devices);
 app.use('/schedule', schedule);
+app.use('/instantReports', reports);
 
 
 // catch 404 and forward to error handler
