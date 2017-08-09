@@ -100,3 +100,8 @@ a {
 .text_black {
     color: black;
 }
+
+.not-active {
+    pointer-events: none;
+    cursor: default;
+}

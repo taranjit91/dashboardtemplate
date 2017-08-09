@@ -1,5 +1,6 @@
-<div class="row">
-    <form method="patch">
+<div class="row ">
+    <form method="post">
+
         <div class="row">
             <div class="weekDays-selector">
                 <h4 class="text_black">
@@ -21,13 +22,14 @@
                 <label for="weekday-sun">Sun<un/label>
 
            
-        </div>
-        </div>
-        <div class="row">
+        </div><!-- weekDays-selector ends-->
+        </div><!-- row ends-->
+     
+        <div class="row input-group">
         <h5>Frequency(in Hours)</h5>
 
-        <div class="form-group">
-        <label for="sel1">Select list:</label>
+        <div class="input-group">
+        <label for="sel1">Select hours:</label>
                 <select class="form-control" id="sel1">
          <option>1</option>
         <option>2</option>
@@ -35,6 +37,43 @@
         <option>4</option>
             </select>
             </div>
-            <button class="btn-success btn-lg">Submit</button>
+            <!-- form-group ends-->
+
         </div>
+        <!-- row ends-->
+        <br>
+        <label>From: </label>
+        <div class="input-group bootstrap-timepicker timepicker">
+            <input id="timepicker1" type="text" class="form-control input-small">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+        </div>
+        <br/>
+        <label>To: </label>
+        <div class="input-group bootstrap-timepicker timepicker">
+            <input id="timepicker2" type="text" class="form-control input-small">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+        </div>
+        <br/>
+        <br/>
+        <button class=" btn-success btn-lg ">Submit</button>
+    </form>
+    <script src="/javascripts/jquery.js ">
+    </script>
+
+    <script src="/javascripts/bootstrap-timepicker.min.js ">
+    </script>
+
+
+
+
+
+    <script type="text/javascript">
+        $('#timepicker1').timepicker({
+            showInputs: true
+        });
+        $('#timepicker2').timepicker({
+            showInputs: true
+        });
+    </script>
+
 </div>

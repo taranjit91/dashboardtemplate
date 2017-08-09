@@ -1,10 +1,17 @@
 var fetch = require('node-fetch');
 var usersController = require('./userController.js');
 
+const cheerio = require('cheerio');
+
+
+
+
+
 module.exports.Display = (req, res) => {
     return res.render('./schedule', {
         title: 'Schedule',
-        email: ''
+        email: '',
+        cheerio: cheerio
     });
 }
 
@@ -23,7 +30,7 @@ module.exports.UpdateSchedule = (req, res) => {
             'cookie': usersController.cookieValue()
         },
         credentials: 'same-origin',
-        body: '{	"device": {	"is_reporting": true,"reporting_days": [true, true, true, true, true, true, true],	"reporting_start": 0,	"reporting_end": 86400,	"reporting_freq": 600,"reporting_offset": -14400,"next_report": 1501889254	}}'
+        body: '{"device": {	"is_reporting": true,"reporting_days": [true, true, true, true, true, true, true],	"reporting_start": 0,	"reporting_end": 86400,	"reporting_freq": 600,"reporting_offset": -14400,"next_report": 1502281440	}}'
     }).then(function(response) {
 
         return response.json();
