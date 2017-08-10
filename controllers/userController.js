@@ -59,14 +59,20 @@ module.exports.register = (req, res) => {
     })
 }
 
+
+
 // login function 
 module.exports.signIn = (req, res) => {
 
     var username = req.body.email;
     var password = req.body.password;
+    var session = req.session;
+    session.username = username;
+
     console.log("username >> " + username + " >> " + password);
     var auth = 'Basic ' + new Buffer(username + ':' + password).toString('base64'); // create authorization string
     console.log('auth >>> ' + auth);
+    session.auth = auth;
     fetch('http://wetraqapi.azurewebsites.net/login', {
         method: 'GET',
         headers: {
@@ -75,12 +81,18 @@ module.exports.signIn = (req, res) => {
         credentials: 'same-origin',
 
     }).then(function(response) {
-        cookie = response.headers.get('set-cookie'); // undefined
-        console.log("setting cookie >> " + cookie);
+        var c = response.headers.get('set-cookie'); // undefined
+        cookie = c;
+        session.c = c;
+
+        console.log("setting cookie >> " + session.c);
+
+
         return response.json();
     }).then(function(json) {
         var jsonResponse = (json);
-
+        session.devices = jsonResponse.user.device;
+        session.email = jsonResponse.user.primary_email;
         if (jsonResponse.hasOwnProperty('user')) {
             user = JSON.stringify(jsonResponse);
             console.log("setting user variable >> " + user);
@@ -117,13 +129,20 @@ module.exports.cookieValue = function() {
     return cookie;
 };
 
-
-
-
-module.exports.displaySIgnInPage = (req, res) => {
-
-    return res.render('./dashboard', {
-        title: 'Login'
-
-    })
+// create a function to check if the user is authenticated
+module.exports.RequireAuth = (req, res, next) => {
+    // check if the user is logged in
+    if (!req.session.c) {
+        return res.redirect('/');
+    }
+    next();
 }
+
+
+// module.exports.displaySignInPage = (req, res) => {
+
+//     return res.redirect('/', {
+//         title: 'Login Required'
+
+//     })
+// }
