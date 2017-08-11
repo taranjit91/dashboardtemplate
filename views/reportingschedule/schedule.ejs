@@ -2,10 +2,11 @@
     <form method="post">
 
         <div class="row">
-            <div class="weekDays-selector">
+            <!--      <div class="weekDays-selector">
                 <h4 class="text_black">
                     Select Days </h4>
-                <h5 id="display-json"></h5>
+                <h5 id="deviceids-json"></h5>
+                <h5 id="days-json"></h5>
                 <input type="checkbox" id="weekday-mon" class="weekday" />
                 <label for="weekday-mon">Mon</label>
                 <input type="checkbox" id="weekday-tue" class="weekday" />
@@ -22,19 +23,35 @@
                 <label for="weekday-sun">Sun<un/label>
 
            
-        </div><!-- weekDays-selector ends-->
-        </div><!-- row ends-->
-     
-        <div class="row input-group">
-        <h5>Frequency(in Hours)</h5>
+        </div><!-- weekDays-selector ends-->-->
+            <br>
+            <br>
+            <br>
+            <input id="deviceids_json" name="deviceids_json">
+            <input id="days" name="days">
+            <div id="checkboxes">
+                <label class="checkbox-inline"><input id = "m" type="checkbox" value="">Mon</label>
+                <label class="checkbox-inline"><input id = "t" type="checkbox" value="">Tues</label>
+                <label class="checkbox-inline"><input id = "w" type="checkbox" value="">Wed</label>
+                <label class="checkbox-inline"><input id = "th" type="checkbox" value="">Thurs</label>
+                <label class="checkbox-inline"><input id = "f" type="checkbox" value="">Fri</label>
+                <label class="checkbox-inline"><input id = "sa" type="checkbox" value="">Sat</label>
+                <label class="checkbox-inline"><input id = "s" type="checkbox" value="">Sun</label>
+            </div>
+        </div>
+        <!-- row ends-->
 
-        <div class="input-group">
-        <label for="sel1">Select hours:</label>
-                <select class="form-control" id="sel1">
-         <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
+        <div class="row input-group">
+            <h5>Frequency(in Hours)</h5>
+
+            <div class="input-group">
+                <label for="sel1">Select hours:</label>
+                <select name="freq" class="form-control" id="sel1">
+                        <option>0.30</option>
+         <option>1.00</option>
+        <option>2.00</option>
+        <option>3.00</option>
+        <option>4.00</option>
             </select>
             </div>
             <!-- form-group ends-->
@@ -44,13 +61,13 @@
         <br>
         <label>From: </label>
         <div class="input-group bootstrap-timepicker timepicker">
-            <input id="timepicker1" type="text" class="form-control input-small">
+            <input id="timepicker1" name="timepicker1" type="text" class="form-control input-small">
             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
         </div>
         <br/>
         <label>To: </label>
         <div class="input-group bootstrap-timepicker timepicker">
-            <input id="timepicker2" type="text" class="form-control input-small">
+            <input id="timepicker2" name="timepicker2" type="text" class="form-control input-small">
             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
         </div>
         <br/>
@@ -64,7 +81,9 @@
                     </a> -->
                         <li class="list-group-item">
                             <%= devices[count].device_name %>
-                                <label type="hidden"><%= devices[count].device_iccid %></label>
+                                <label class="text_transparent">
+                                <%= devices[count].device_iccid %>
+                                    </label>
                         </li>
 
                         <% } %>
@@ -81,11 +100,6 @@
             <%= message%>
         </div>
         <% } %>
-
-
-
-
-
 
 
             <script src="/javascripts/jquery.js ">

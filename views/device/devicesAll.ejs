@@ -1,0 +1,17 @@
+<div class="col-lg-12">
+    <div class="well verticalSpace">
+        <ul id="check-list-box" class="list-group checked-list-box">
+            <% for (let count = 0; count < devices.length; count++) { %>
+                <!--         <a href="/device/<%= devices[count].device_iccid %>" class="list-group-item list-group-item-action">
+                    <%= devices[count].device_name %>
+                </a> -->
+                <li class="list-group-item">
+                    <%= devices[count].device_name %>
+                        <label class="text_transparent">
+                            <%= devices[count].device_iccid %>
+                                </label>
+                </li>
+
+                <% } %>
+
+    </div>

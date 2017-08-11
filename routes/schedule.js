@@ -9,7 +9,7 @@ var usersController = require('../controllers/userController.js');
 router.get('/', usersController.RequireAuth, (req, res, next) => {
     scheduleController.Display(req, res, next);
 }).post('/', (req, res, next) => {
-    scheduleController.UpdateSchedule(req, res, next);
+    scheduleController.UpdateBulkSchedule(req, res, next);
 });
 
 router.get('/update', usersController.RequireAuth, (req, res, next) => {

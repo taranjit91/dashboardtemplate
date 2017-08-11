@@ -7,6 +7,9 @@ let scheduleController = require('../controllers/scheduleController');
 // get all devices
 
 
+router.get('/', (req, res, next) => {
+    deviceController.DisplayDevicesPage(req, res);
+});
 
 // GET the Game Details page in order to edit a new Game
 router.get('/:id', (req, res, next) => {

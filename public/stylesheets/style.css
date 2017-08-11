@@ -85,10 +85,11 @@ a {
     line-height: 40px;
     text-align: center;
     cursor: pointer;
+    color: black;
 }
 
 .weekDays-selector input[type=checkbox]:checked+label {
-    background: #2AD705;
+    background: rgb(66, 139, 202);
     color: #ffffff;
 }
 
@@ -104,6 +105,10 @@ a {
 .not-active {
     pointer-events: none;
     cursor: default;
+}
+
+.text_transparent {
+    color: transparent;
 }
 
 
@@ -126,3 +131,8 @@ for checkbox list view
 .well .list-group {
     margin-bottom: 0px;
 }
+
+
+/*
+for checkbox list view
+*/

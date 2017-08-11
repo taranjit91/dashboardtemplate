@@ -2,6 +2,17 @@ var fetch = require('node-fetch');
 var usersController = require('./userController.js');
 // Displays the Details page to Update a Game
 // find the device by id and populate the form
+
+module.exports.DisplayDevicesPage = (req, res) => {
+    var session = req.session;
+    return res.render('./devices', {
+        title: ' Devices',
+        devices: session.devices,
+        email: session.email
+    });
+};
+
+
 module.exports.DisplayEdit = (req, res) => {
 
 

@@ -63,40 +63,50 @@ module.exports.UpdateSchedule = (req, res) => {
 
 // updating more devices
 module.exports.UpdateBulkSchedule = (req, res) => {
-
+    var session = req.session;
     console.log('on updatre method &&& ');
-    // get a reference to the id from the url
-    // let id = (req.params.id);
-    //   console.log("url>> " + 'api.wetraq.ca/device/' + id + '/schedule');
-    // find one game by its id
+    var days = req.body.days;
+    var devicearray = req.body.deviceids_json;
+    var freq = req.body.freq;
+    var picker1 = req.body.timepicker1;
+    picker1 = picker1.replace(":", ".");
+    var startTime = parseFloat(picker1) * 60 * 60;
+
+    var picker2 = req.body.timepicker2;
+    picker2 = picker2.replace(":", ".");
+    var endTime = parseFloat(picker2) * 60 * 60;
+
+
+    freq = freq * 60 * 60; // converting value to seconds
+
+    console.log(days + " :: " + devicearray + "  :: " + freq + " :: " + startTime + " :: " + endTime);
+
+    // update device schedule
     fetch('http://api.wetraq.ca/device/schedule', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'cookie': usersController.cookieValue()
+            'cookie': session.c
         },
         credentials: 'same-origin',
         body: '{' +
             '"device": {' +
             '"is_reporting": true,' +
-            '"reporting_days": [true, true, true, true, true, true, true],' +
-            '"reporting_start": 0,' +
-            '"reporting_end": 86400,' +
-            '"reporting_freq": 600,' +
+            '"reporting_days": ' + days + ',' +
+            '"reporting_start": ' + startTime + ',' +
+            '"reporting_end": ' + endTime + ',' +
+            '"reporting_freq": ' + freq + ' ,' +
             '"reporting_offset": -14400,' +
             '"next_report": 1502281440' +
             '},' +
-            '"device_list": ["00000000000000000002", "00000000000000000003"]' +
+            '"device_list": ' + devicearray +
             '}'
     }).then(function(response) {
         var responseStatus = response.status;
-        if (responseStatus == 204)
+        console.log("response status >> " + response.status + "   " + response.message);
+        if (responseStatus == 200)
 
-            return res.render('./device/deviceDetails', {
-            title: 'Edit Device',
-
-
-        });
+            return res.redirect('/device');
         else {
             return res.render('./schedule', {
                 title: "update failed",

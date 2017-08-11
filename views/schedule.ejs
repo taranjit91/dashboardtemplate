@@ -99,10 +99,11 @@
                 var checkedItems = [],
                     counter = 0;
                 $("#check-list-box li.active label").each(function(idx, label) { // select ids in array
-                    checkedItems[counter] = $(label).text();
+                    checkedItems[counter] = $(label).text().trim().replace("\n ", "");
                     counter++;
                 });
-                $('#display-json').html(JSON.stringify(checkedItems));
+                console.log(checkedItems);
+                $('#deviceids_json').val(JSON.stringify(checkedItems, null, 0));
             }
 
             // Initialization
@@ -121,7 +122,7 @@
             }
             init();
         });
-
+        updateDaysdiv();
         $('#get-checked-data').on('click', function(event) {
             event.preventDefault();
             var checkedItems = {},
@@ -130,9 +131,103 @@
                 checkedItems[counter] = $(li).text();
                 counter++;
             });
-            $('#display-json').html(JSON.stringify(checkedItems, null, '\t'));
+            $('#deviceids_json').val(JSON.stringify(checkedItems, null, '\t'));
         });
     });
+
+    var days = [];
+    //  days = [m, t, w, t, f, sa, s];
+    days = [false, false, false, false, false, false, false];
+
+    $("#m").change(function() {
+
+        if (this.checked) {
+            //Do stuff
+            days[0] = true;
+        } else {
+            days[0] = false;
+
+        }
+        updateDaysdiv();
+
+    });
+    $("#t").change(function() {
+
+        if (this.checked) {
+            //Do stuff
+            days[1] = true;
+        } else {
+            days[1] = false;
+
+        }
+        updateDaysdiv();
+
+    });
+    $("#w").change(function() {
+
+        if (this.checked) {
+            //Do stuff
+            days[2] = true;
+        } else {
+            days[2] = false;
+
+        }
+        updateDaysdiv();
+
+    });
+    $("#th").change(function() {
+
+        if (this.checked) {
+            //Do stuff
+            days[3] = true;
+        } else {
+            days[3] = false;
+
+        }
+        updateDaysdiv();
+
+    });
+    $("#f").change(function() {
+
+        if (this.checked) {
+            //Do stuff
+            days[4] = true;
+        } else {
+            days[4] = false;
+
+        }
+        updateDaysdiv();
+
+    });
+    $("#sa").change(function() {
+
+        if (this.checked) {
+            //Do stuff
+            days[5] = true;
+        } else {
+            days[5] = false;
+
+        }
+        updateDaysdiv();
+
+    });
+
+    $("#s").change(function() {
+
+        if (this.checked) {
+            //Do stuff
+            days[6] = true;
+        } else {
+            days[6] = false;
+
+        }
+        updateDaysdiv();
+
+    });
+
+    function updateDaysdiv() {
+        $('#days').val(JSON.stringify(days, null, 0));
+    };
 </script>
 
 </html>
