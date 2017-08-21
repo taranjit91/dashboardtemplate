@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 // require the users controller
 let usersController = require('../controllers/userController');
+let geoFencingController = require('../controllers/geoFencingController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -11,8 +12,10 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET dashboard page. */
-router.get('/dashboard', function(req, res, next) {
-    res.render('dashboard_user', { title: 'Dashboard' });
+router.get('/dashboard', usersController.RequireAuth, function(req, res, next) {
+    geoFencingController.DisplayPage(req, res, next);
+}).post('/dashboard', (req, res, next) => {
+    geoFencingController.UpdateBulkGeoFencing(req, res, next);
 });
 
 /* GET dashboard page. */

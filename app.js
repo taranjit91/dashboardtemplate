@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var devices = require('./routes/device');
 var schedule = require('./routes/schedule');
 var reports = require('./routes/instantreports');
+var geofence = require('./routes/geofence');
 var fetch = require('node-fetch');
 
 var app = express();
@@ -43,6 +44,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/device', devices);
 app.use('/schedule', schedule);
+app.use('/geofence', geofence);
 app.use('/instantReports', reports);
 
 

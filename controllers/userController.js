@@ -93,16 +93,12 @@ module.exports.signIn = (req, res) => {
         var jsonResponse = (json);
         session.devices = jsonResponse.user.device;
         session.email = jsonResponse.user.primary_email;
+        session.title = "Dashboard";
+        session.jsonResponse = jsonResponse;
         if (jsonResponse.hasOwnProperty('user')) {
             user = JSON.stringify(jsonResponse);
             console.log("setting user variable >> " + user);
-            return res.render('./dashboard_user', {
-                title: 'Dashboard',
-                jsonResponse: jsonResponse,
-                email: jsonResponse.user.primary_email,
-                devices: jsonResponse.user.device,
-
-            });
+            return res.redirect('/geofence');
         } else {
             cookie = null;
             return res.render('./login', {
