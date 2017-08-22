@@ -53,6 +53,10 @@
                                 <option>5</option>
                                     </select>
                             </div>
+                            <br>
+                            <div id="seekbar-container-blue" style="width:500px;height:30px"></div>
+
+                            <input name="seekbar_val" id="seekbar-val">
                             <h3 class="purpleText verticalSpace">Select Devices</h3>
                             <div class="row">
                                 <input name='lat' id='lat' type="hidden">
@@ -93,7 +97,142 @@
 </body>
 <script src="/javascripts/jquery.js ">
 </script>
+<script src="/javascripts/jquery-1.11.2.min.js ">
+</script>
+<script type="text/javascript" src="./javascripts/seekbar.js">
+</script>
+<link rel="stylesheet" type="text/css" href="./stylesheets/seekbar.css" />
 <script>
+    var circles = []; // store all circles in array 
+    var map;
+
+    var seekbar = new Seekbar.Seekbar({
+        renderTo: "#seekbar-container-blue",
+        minValue: .500,
+        maxValue: 15,
+        valueListener: function(value) {
+            this.setValue(Math.round(value));
+            $('#seekbar-val').val((Math.round(value * 1000) / 1000));
+            updateRadius((Math.round(value * 1000) / 1000));
+
+        },
+        barSize: 4,
+        needleSize: 0.5,
+        thumbColor: '#cc0000ff',
+        negativeColor: '#0000ff',
+        positiveColor: '#CCC',
+        value: 10
+    });
+    $('#seekbar-val').val((Math.round(seekbar.value * 1000) / 1000));
+
+    function initMap() {
+        var htmString = document.getElementById('devicesJson').innerHTML;
+        var json = JSON.parse(htmString);
+        var devicess = json.user.device;
+
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+
+
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: {
+
+                lat: 43.772959,
+                lng: -79.257609
+            }
+
+        });
+
+
+        var cityCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: {
+                lat: 43.775293,
+                lng: -79.257825
+            },
+            radius: Math.round($('#seekbar-val').val()) * 1000
+        });
+
+        circles.push(cityCircle);
+        var marker1 = new google.maps.Marker({
+            position: {
+                lat: 43.775293,
+                lng: -79.257825
+            },
+            draggable: true,
+            map: map,
+            title: "Geofence Center"
+        });
+        marker1.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+
+        //     for (count = 0; count < devicess.length; count++) {
+        //         var myLatLng = {
+        //             lat: devicess[count].geofence_latitude,
+        //             lng: devicess[count].geofence_longitude
+        //         };
+        //         var marker = new google.maps.Marker({
+        //             position: myLatLng,
+
+        //             map: map,
+        //             title: devicess[count].device_name
+        //         });
+
+        //     }
+        // }
+
+        google.maps.event.addListener(marker1, 'drag', function(event) {
+            console.debug('new position is ' + event.latLng.lat() + ' / ' + event.latLng.lng());
+        });
+        google.maps.event.addListener(marker1, 'dragend', function(event) {
+
+            for (i = 0; i < circles.length; i++) {
+                circles[i].setMap(null);
+            }
+            circles = [];
+            var rad = $('#seekbar-val').val();
+            console.log("radius value" + rad);
+            var cityCircle = new google.maps.Circle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: map,
+                center: {
+                    lat: event.latLng.lat(),
+                    lng: event.latLng.lng()
+                },
+                radius: rad * 1000
+            });
+            circles.push(cityCircle);
+        });
+
+
+
+        function geocodePosition(pos) {
+            geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                    latLng: pos
+                },
+                function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        //$("#mapSearchInput").val(results[0].formatted_address);
+                        // $("#mapErrorMsg").hide(100);
+                    } else {
+                        // $("#mapErrorMsg").html('Cannot determine address at this location.'+status).show(100);
+                    }
+                }
+            );
+        }
+    }
+
     $(document).ready(function() {
 
         getLocation();
@@ -194,6 +333,22 @@
         }
     }
 
+    function updateRadius(rad) {
+        console.log(circles.length + " >> ");
+        for (i = 0; i < circles.length; i++) {
+            var circle = circles[i];
+            circle.radius = rad * 1000;
+        }
+        var newCircle = circles;
+        circles[0].setMap(null);
+        circles = [];
+
+        circles = newCircle;
+        circles[0].setMap(map);
+    }
+
+    showPosition(circles[0].center);
+
     function showPosition(position) {
 
         //  Console.log("Latitude: " + position.coords.latitude +
@@ -201,6 +356,9 @@
         $('#lat').val(position.coords.latitude);
         $('#longi').val(position.coords.longitude);
     }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CxwlDf09EE5-hIhqyMRuVZpRlK6K3PE&callback=initMap" async>
 </script>
 
 </html>
