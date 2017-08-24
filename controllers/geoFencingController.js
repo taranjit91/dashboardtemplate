@@ -31,42 +31,44 @@ module.exports.UpdateBulkGeoFencing = (req, res) => {
 
     console.log(radius + " :: " + devicearray + " :: " + lat + "  :: " + longi);
 
+    var device_arrayy = '{' +
+        '"device": {' +
+        '"geofencing": true,' +
+        '"geofence_radius": ' + radius + ',' +
+        '"geofence_latitude":' + lat + ',' +
+        '"geofence_longitude":' + longi +
+        '},' +
+        '"device_list": ' + devicearray +
+        '}';
+    console.log("body ::: " + device_arrayy);
     // update device schedule
-    // fetch('http://api.wetraq.ca/device/geofence', {
-    //     method: 'PATCH',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'cookie': session.c
-    //     },
-    //     credentials: 'same-origin',
-    //     body: '{ "device":         { "geofencing": true, "geofence_radius":' + radius + ', "geofence_latitude": 43.890975,          "geofence_longitude": -79.23227 },          "device_list": ["00000000000000000003", "00000000000000000002"] }'
-    //         // body: '{' +
-    //         //     '"device": {' +
-    //         //     '"geofencing": true,' +
-    //         //     '"geofence_radius": ' + radius + "," +
-    //         //     '"geofence_latitude":' + lat + "," +
-    //         //     '"geofence_longitude":' + longi +
-    //         //     '},' +
-    //         //     '"device_list": ' + devicearray +
-    //         //     '}'
-    // }).then(function(response) {
-    //     var responseStatus = response.status;
-    //     console.log("response status >> " + "   " + session.c + "  " + response.status + "   " + response.message);
-    //     if (responseStatus == 200)
+    fetch('http://api.wetraq.ca/device/geofence', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'cookie': session.c
+        },
+        credentials: 'same-origin',
+        //  body: '{ "device":         { "geofencing": true, "geofence_radius":' + radius + ', "geofence_latitude": 43.890975,          "geofence_longitude": -79.23227 },          "device_list": ["00000000000000000003", "00000000000000000002"] }'
+        body: device_arrayy
+    }).then(function(response) {
+        var responseStatus = response.status;
+        console.log("response status >> " + "   " + session.c + "  " + response.status + "   " + response.message);
+        if (responseStatus == 200)
 
-    //         return res.redirect('/geofence');
+            return res.redirect('/geofence');
 
-    //     else {
-    //         return res.render('./', {
-    //             title: "update failed",
-    //             message: 'Update Failed on Geofence'
-    //         });
-    //     }
+        else {
+            return res.render('./', {
+                title: "update failed",
+                message: 'Update Failed on Geofence'
+            });
+        }
 
-    // }).catch(function(error) {
-    //     return res.render('./error', {
-    //         title: "error",
-    //         message: error
-    //     });
-    // });
+    }).catch(function(error) {
+        return res.render('./error', {
+            title: "error",
+            message: error
+        });
+    });
 }

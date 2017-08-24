@@ -45,13 +45,13 @@
                             <div class="input-group">
                                 <input id="deviceids_json" name="deviceids_json">
                                 <label for="sel1">Select radius for Geofence in KMS:</label>
-                                <select name="radius" class="form-control" id="sel1">
+                                <!--   <select name="radius" class="form-control" id="sel1">
                                                 <option>1</option>
                                  <option>2</option>
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
-                                    </select>
+                                    </select> -->
                             </div>
                             <br>
                             <div id="seekbar-container-blue" style="width:500px;height:30px"></div>
@@ -160,6 +160,7 @@
             radius: Math.round($('#seekbar-val').val()) * 1000
         });
 
+
         circles.push(cityCircle);
         var marker1 = new google.maps.Marker({
             position: {
@@ -172,20 +173,21 @@
         });
         marker1.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
 
-        //     for (count = 0; count < devicess.length; count++) {
-        //         var myLatLng = {
-        //             lat: devicess[count].geofence_latitude,
-        //             lng: devicess[count].geofence_longitude
-        //         };
-        //         var marker = new google.maps.Marker({
-        //             position: myLatLng,
+        for (count = 0; count < devicess.length; count++) {
+            if (devicess[count].report.length > 0) { // add marker if it exist in report
+                var myLatLng = {
+                    lat: devicess[count].report[devicess[count].report.length - 1].latitude,
+                    lng: devicess[count].report[devicess[count].report.length - 1].longitude
+                };
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
 
-        //             map: map,
-        //             title: devicess[count].device_name
-        //         });
+                    map: map,
+                    title: devicess[count].device_name
+                });
+            }
+        }
 
-        //     }
-        // }
 
         google.maps.event.addListener(marker1, 'drag', function(event) {
             console.debug('new position is ' + event.latLng.lat() + ' / ' + event.latLng.lng());
@@ -347,7 +349,7 @@
         circles[0].setMap(map);
     }
 
-    showPosition(circles[0].center);
+
 
     function showPosition(position) {
 

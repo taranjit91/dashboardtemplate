@@ -98,17 +98,17 @@
                 <li>
                     <a href="instantReports"><i class="fa fa-fw  fa-money"></i> Plan</a>
                 </li>
-                <%} else{%>
+                <%} else if(title == "device"){%>
                     <li>
                         <a href="dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
                         <a href="instantReports"><i class="fa fa-fw fa-bar-chart-o"></i> Instant Report</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="device"><i class="fa fa-fw fa-mobile-phone"></i> Edit Device</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="schedule"><i class="fa fa-fw  fa-calendar"></i> Reporting Schedule</a>
                     </li>
                     <li>
@@ -120,7 +120,117 @@
 
                     <li>
                         <a href="instantReports"><i class="fa fa-fw  fa-money"></i> Plan</a> </li>
-                    <%}%>
+                    <%}  else if(title == "Instant Reports"){%>
+                        <li>
+                            <a href="dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        </li>
+                        <li class="active">
+                            <a href="instantReports"><i class="fa fa-fw fa-bar-chart-o"></i> Instant Report</a>
+                        </li>
+                        <li>
+                            <a href="device"><i class="fa fa-fw fa-mobile-phone"></i> Edit Device</a>
+                        </li>
+                        <li>
+                            <a href="schedule"><i class="fa fa-fw  fa-calendar"></i> Reporting Schedule</a>
+                        </li>
+                        <li>
+                            <a href="instantReports"><i class="fa fa-fw  fa-history"></i> Movement History </a>
+                        </li>
+                        <li>
+                            <a href="instantReports"><i class="fa fa-fw fa-map-marker"></i> Geo Fencing</a>
+                        </li>
+
+                        <li>
+                            <a href="instantReports"><i class="fa fa-fw  fa-money"></i> Plan</a> </li>
+                        <%}  else if(title == "Schedule"){%>
+                            <li>
+                                <a href="dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <a href="instantReports"><i class="fa fa-fw fa-bar-chart-o"></i> Instant Report</a>
+                            </li>
+                            <li>
+                                <a href="device"><i class="fa fa-fw fa-mobile-phone"></i> Edit Device</a>
+                            </li>
+                            <li class="active">
+                                <a href="schedule"><i class="fa fa-fw  fa-calendar"></i> Reporting Schedule</a>
+                            </li>
+                            <li>
+                                <a href="instantReports"><i class="fa fa-fw  fa-history"></i> Movement History </a>
+                            </li>
+                            <li>
+                                <a href="instantReports"><i class="fa fa-fw fa-map-marker"></i> Geo Fencing</a>
+                            </li>
+
+                            <li>
+                                <a href="instantReports"><i class="fa fa-fw  fa-money"></i> Plan</a> </li>
+                            <%}  else if(title == "Movement History"){%>
+                                <li>
+                                    <a href="dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="instantReports"><i class="fa fa-fw fa-bar-chart-o"></i> Instant Report</a>
+                                </li>
+                                <li>
+                                    <a href="device"><i class="fa fa-fw fa-mobile-phone"></i> Edit Device</a>
+                                </li>
+                                <li>
+                                    <a href="schedule"><i class="fa fa-fw  fa-calendar"></i> Reporting Schedule</a>
+                                </li>
+                                <li class="active">
+                                    <a href="instantReports"><i class="fa fa-fw  fa-history"></i> Movement History </a>
+                                </li>
+                                <li>
+                                    <a href="instantReports"><i class="fa fa-fw fa-map-marker"></i> Geo Fencing</a>
+                                </li>
+
+                                <li>
+                                    <a href="instantReports"><i class="fa fa-fw  fa-money"></i> Plan</a> </li>
+                                <%}  else if(title == "Geo Fencing"){%>
+                                    <li>
+                                        <a href="dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a href="instantReports"><i class="fa fa-fw fa-bar-chart-o"></i> Instant Report</a>
+                                    </li>
+                                    <li>
+                                        <a href="device"><i class="fa fa-fw fa-mobile-phone"></i> Edit Device</a>
+                                    </li>
+                                    <li>
+                                        <a href="schedule"><i class="fa fa-fw  fa-calendar"></i> Reporting Schedule</a>
+                                    </li>
+                                    <li>
+                                        <a href="instantReports"><i class="fa fa-fw  fa-history"></i> Movement History </a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="instantReports"><i class="fa fa-fw fa-map-marker"></i> Geo Fencing</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="instantReports"><i class="fa fa-fw  fa-money"></i> Plan</a> </li>
+                                    <%}  else if(title == "Plans"){%>
+                                        <li>
+                                            <a href="dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="instantReports"><i class="fa fa-fw fa-bar-chart-o"></i> Instant Report</a>
+                                        </li>
+                                        <li>
+                                            <a href="device"><i class="fa fa-fw fa-mobile-phone"></i> Edit Device</a>
+                                        </li>
+                                        <li>
+                                            <a href="schedule"><i class="fa fa-fw  fa-calendar"></i> Reporting Schedule</a>
+                                        </li>
+                                        <li>
+                                            <a href="instantReports"><i class="fa fa-fw  fa-history"></i> Movement History </a>
+                                        </li>
+                                        <li>
+                                            <a href="instantReports"><i class="fa fa-fw fa-map-marker"></i> Geo Fencing</a>
+                                        </li>
+
+                                        <li class="active">
+                                            <a href="instantReports"><i class="fa fa-fw  fa-money"></i> Plan</a> </li>
+                                        <%}%>
     </div>
     <!-- /.navbar-collapse -->
 </nav>
