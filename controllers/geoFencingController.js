@@ -6,7 +6,7 @@ var usersController = require('./userController.js');
 module.exports.DisplayPage = (req, res) => {
     var session = req.session;
     return res.render('./dashboard_user', {
-        title: ' Dashboard',
+        title: ' Geofencing',
         devices: session.devices,
         email: session.email,
         jsonResponse: session.jsonResponse,
@@ -19,7 +19,7 @@ module.exports.DisplayPage = (req, res) => {
 // updating more devices
 module.exports.UpdateBulkGeoFencing = (req, res) => {
     var session = req.session;
-    console.log('on updatre method geo fence ');
+    console.log('on update method geo fence ');
     var radius = req.body.seekbar_val;
     var devicearray = req.body.deviceids_json;
     var lat = req.body.lat;

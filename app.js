@@ -5,20 +5,27 @@ var logger = require('morgan');
 
 var bodyParser = require('body-parser');
 
+// setting routes
 var index = require('./routes/index');
 var users = require('./routes/users');
 var devices = require('./routes/device');
 var schedule = require('./routes/schedule');
 var reports = require('./routes/instantreports');
 var geofence = require('./routes/geofence');
+var plans = require('./routes/plans');
+var history = require('./routes/history');
+
+// setting routes ends
+
+// node-fetch is for coonecting to apis
 var fetch = require('node-fetch');
 
 var app = express();
 
-
+// for session
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-
+// session dependencies ends
 
 
 app.use(cookieParser());
@@ -46,6 +53,8 @@ app.use('/device', devices);
 app.use('/schedule', schedule);
 app.use('/geofence', geofence);
 app.use('/instantReports', reports);
+app.use('/history', history);
+app.use('/plans', plans);
 
 
 // catch 404 and forward to error handler
