@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h2 class="page-header">
-                                Dashboard
+                                <%= title %>
                             </h2>
 
                         </div>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="row">
                             <div class="input-group">
-                                <input id="deviceids_json" name="deviceids_json">
+                                <input type="hidden" id="deviceids_json" name="deviceids_json">
                                 <label for="sel1">Select radius for Geofence in KMS:</label>
                                 <!--   <select name="radius" class="form-control" id="sel1">
                                                 <option>1</option>
@@ -70,14 +70,19 @@
                                             <!--         <a href="/device/<%= devices[count].device_iccid %>" class="list-group-item list-group-item-action">
                                                     <%= devices[count].device_name %>
                                                 </a> -->
-                                            <li class="list-group-item">
-                                                <%= devices[count].device_name %>
-                                                    <label class="text_transparent">
+                                            <% if(devices[count].geofencing == true ){ %>
+                                                <!-- if there is any report then disable the item-->
+                                                <li class="list-group-item disabled">
+                                                    <% } else   {%>
+                                                        <li class="list-group-item ">
+                                                            <%}%>
+                                                                <%= devices[count].device_name %>
+                                                                    <label class="text_transparent">
                                                             <%= devices[count].device_iccid %>
                                                                 </label>
-                                            </li>
+                                                        </li>
 
-                                            <% } %>
+                                                        <% } %>
 
                                 </div>
                             </div>
@@ -92,114 +97,61 @@
     </div>
     <!-- /.container-fluid -->
 
-    <% include ./partials/scripts.ejs %>
+
 
 </body>
-<script src="/javascripts/jquery.js ">
-</script>
-<script src="/javascripts/jquery-1.11.2.min.js ">
-</script>
-<script type="text/javascript" src="./javascripts/seekbar.js">
-</script>
-<link rel="stylesheet" type="text/css" href="./stylesheets/seekbar.css" />
-<script>
-    var circles = []; // store all circles in array 
-    var map;
+<% include ./partials/scripts.ejs %>
+    <script src="/javascripts/jquery.js ">
+    </script>
+    <script src="/javascripts/jquery-1.11.2.min.js ">
+    </script>
+    <script type="text/javascript" src="./javascripts/seekbar.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/seekbar.css" />
+    <script>
+        var circles = []; // store all circles in array 
+        var map;
 
-    var seekbar = new Seekbar.Seekbar({
-        renderTo: "#seekbar-container-blue",
-        minValue: .500,
-        maxValue: 15,
-        valueListener: function(value) {
-            this.setValue(Math.round(value));
-            $('#seekbar-val').val((Math.round(value * 1000) / 1000));
-            updateRadius((Math.round(value * 1000) / 1000));
+        var seekbar = new Seekbar.Seekbar({
+            renderTo: "#seekbar-container-blue",
+            minValue: .500,
+            maxValue: 15,
+            valueListener: function(value) {
+                this.setValue(Math.round(value));
+                $('#seekbar-val').val((Math.round(value * 1000) / 1000));
+                updateRadius((Math.round(value * 1000) / 1000));
 
-        },
-        barSize: 4,
-        needleSize: 0.5,
-        thumbColor: '#cc0000ff',
-        negativeColor: '#0000ff',
-        positiveColor: '#CCC',
-        value: 10
-    });
-    $('#seekbar-val').val((Math.round(seekbar.value * 1000) / 1000));
-
-    function initMap() {
-        var htmString = document.getElementById('devicesJson').innerHTML;
-        var json = JSON.parse(htmString);
-        var devicess = json.user.device;
-
-        var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-
-
-
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
-            center: {
-
-                lat: 43.772959,
-                lng: -79.257609
-            }
-
-        });
-
-
-        var cityCircle = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: {
-                lat: 43.775293,
-                lng: -79.257825
             },
-            radius: Math.round($('#seekbar-val').val()) * 1000
+            barSize: 4,
+            needleSize: 0.5,
+            thumbColor: '#cc0000ff',
+            negativeColor: '#0000ff',
+            positiveColor: '#CCC',
+            value: 3
         });
+        $('#seekbar-val').val((Math.round(seekbar.value * 1000) / 1000));
+
+        function initMap() {
+            var htmString = document.getElementById('devicesJson').innerHTML;
+            var json = JSON.parse(htmString);
+            var devicess = json.user.device;
+
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
 
 
-        circles.push(cityCircle);
-        var marker1 = new google.maps.Marker({
-            position: {
-                lat: 43.775293,
-                lng: -79.257825
-            },
-            draggable: true,
-            map: map,
-            title: "Geofence Center"
-        });
-        marker1.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
 
-        for (count = 0; count < devicess.length; count++) {
-            if (devicess[count].report.length > 0) { // add marker if it exist in report
-                var myLatLng = {
-                    lat: devicess[count].report[devicess[count].report.length - 1].latitude,
-                    lng: devicess[count].report[devicess[count].report.length - 1].longitude
-                };
-                var marker = new google.maps.Marker({
-                    position: myLatLng,
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: {
 
-                    map: map,
-                    title: devicess[count].device_name
-                });
-            }
-        }
+                    lat: 43.772959,
+                    lng: -79.257609
+                }
+
+            });
 
 
-        google.maps.event.addListener(marker1, 'drag', function(event) {
-            console.debug('new position is ' + event.latLng.lat() + ' / ' + event.latLng.lng());
-        });
-        google.maps.event.addListener(marker1, 'dragend', function(event) {
-
-            for (i = 0; i < circles.length; i++) {
-                circles[i].setMap(null);
-            }
-            circles = [];
-            var rad = $('#seekbar-val').val();
-            console.log("radius value" + rad);
             var cityCircle = new google.maps.Circle({
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,
@@ -208,159 +160,218 @@
                 fillOpacity: 0.35,
                 map: map,
                 center: {
-                    lat: event.latLng.lat(),
-                    lng: event.latLng.lng()
+                    lat: 43.775293,
+                    lng: -79.257825
                 },
-                radius: rad * 1000
+                radius: Math.round($('#seekbar-val').val()) * 1000
             });
+
+
             circles.push(cityCircle);
-        });
-
-
-
-        function geocodePosition(pos) {
-            geocoder = new google.maps.Geocoder();
-            geocoder.geocode({
-                    latLng: pos
+            var marker1 = new google.maps.Marker({
+                position: {
+                    lat: 43.775293,
+                    lng: -79.257825
                 },
-                function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        //$("#mapSearchInput").val(results[0].formatted_address);
-                        // $("#mapErrorMsg").hide(100);
-                    } else {
-                        // $("#mapErrorMsg").html('Cannot determine address at this location.'+status).show(100);
-                    }
+                draggable: true,
+                map: map,
+                title: "Geofence Center"
+            });
+            marker1.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+
+            for (count = 0; count < devicess.length; count++) {
+                if (devicess[count].report.length > 0) { // add marker if it exist in report
+                    var myLatLng = {
+                        lat: devicess[count].report[devicess[count].report.length - 1].latitude,
+                        lng: devicess[count].report[devicess[count].report.length - 1].longitude
+                    };
+                    var marker = new google.maps.Marker({
+                        position: myLatLng,
+
+                        map: map,
+                        title: devicess[count].device_name
+                    });
                 }
-            );
-        }
-    }
+            }
 
-    $(document).ready(function() {
 
-        getLocation();
-    });
-    $(function() {
-        $('.list-group.checked-list-box .list-group-item').each(function() {
+            google.maps.event.addListener(marker1, 'drag', function(event) {
+                console.debug('new position is ' + event.latLng.lat() + ' / ' + event.latLng.lng());
+            });
+            google.maps.event.addListener(marker1, 'dragend', function(event) {
 
-            // Settings
-            var $widget = $(this),
-                $checkbox = $('<input type="checkbox" class="hidden" />'),
-                color = ($widget.data('color') ? $widget.data('color') : "primary"),
-                style = ($widget.data('style') == "button" ? "btn-" : "list-group-item-"),
-                settings = {
-                    on: {
-                        icon: 'glyphicon glyphicon-check'
+                for (i = 0; i < circles.length; i++) {
+                    circles[i].setMap(null);
+                }
+                circles = [];
+                var rad = $('#seekbar-val').val();
+                console.log("radius value" + rad);
+                var cityCircle = new google.maps.Circle({
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    map: map,
+                    center: {
+                        lat: event.latLng.lat(),
+                        lng: event.latLng.lng()
                     },
-                    off: {
-                        icon: 'glyphicon glyphicon-unchecked'
+                    radius: rad * 1000
+                });
+                circles.push(cityCircle);
+            });
+
+
+
+            function geocodePosition(pos) {
+                geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                        latLng: pos
+                    },
+                    function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            //$("#mapSearchInput").val(results[0].formatted_address);
+                            // $("#mapErrorMsg").hide(100);
+                        } else {
+                            // $("#mapErrorMsg").html('Cannot determine address at this location.'+status).show(100);
+                        }
                     }
-                };
+                );
+            }
+        }
 
-            $widget.css('cursor', 'pointer')
-            $widget.append($checkbox);
+        $(document).ready(function() {
 
-            // Event Handlers
-            $widget.on('click', function() {
-                $checkbox.prop('checked', !$checkbox.is(':checked'));
-                $checkbox.triggerHandler('change');
-                updateDisplay();
-            });
-            $checkbox.on('change', function() {
-                updateDisplay();
-            });
-            // Actions
-            // Actions
-            function updateDisplay() {
-                var isChecked = $checkbox.is(':checked');
+            getLocation();
+        });
+        $(function() {
+            $('.list-group.checked-list-box .list-group-item').each(function() {
 
-                // Set the button's state
-                $widget.data('state', (isChecked) ? "on" : "off");
+                // Settings
+                var $widget = $(this),
+                    $checkbox = $('<input type="checkbox" class="hidden" />'),
+                    color = ($widget.data('color') ? $widget.data('color') : "primary"),
+                    style = ($widget.data('style') == "button" ? "btn-" : "list-group-item-"),
+                    settings = {
+                        on: {
+                            icon: 'glyphicon glyphicon-check'
+                        },
+                        off: {
+                            icon: 'glyphicon glyphicon-unchecked'
+                        }
+                    };
 
-                // Set the button's icon
-                $widget.find('.state-icon')
-                    .removeClass()
-                    .addClass('state-icon ' + settings[$widget.data('state')].icon);
+                //  $widget.css('cursor', 'pointer')
 
-                // Update the button's color
-                if (isChecked) {
-                    $widget.addClass(style + color + ' active');
-                } else {
-                    $widget.removeClass(style + color + ' active');
+
+                //   console.log(">> " + $widget.);
+
+
+                $widget.append($checkbox);
+
+                // Event Handlers
+                $widget.on('click', function() {
+                    $checkbox.prop('checked', !$checkbox.is(':checked'));
+                    $checkbox.triggerHandler('change');
+                    updateDisplay();
+                });
+                $checkbox.on('change', function() {
+                    updateDisplay();
+                });
+                // Actions
+                // Actions
+                function updateDisplay() {
+                    var isChecked = $checkbox.is(':checked');
+
+                    // Set the button's state
+                    $widget.data('state', (isChecked) ? "on" : "off");
+
+                    // Set the button's icon
+                    $widget.find('.state-icon')
+                        .removeClass()
+                        .addClass('state-icon ' + settings[$widget.data('state')].icon);
+
+                    // Update the button's color
+                    if (isChecked) {
+                        $widget.addClass(style + color + ' active');
+                    } else {
+                        $widget.removeClass(style + color + ' active');
+                    }
+                    var checkedItems = [],
+                        counter = 0;
+                    $("#check-list-box li.active label").each(function(idx, label) { // select ids in array
+                        checkedItems[counter] = $(label).text().trim().replace("\n ", "");
+                        counter++;
+                    });
+                    console.log(checkedItems);
+                    $('#deviceids_json').val(JSON.stringify(checkedItems, null, 0));
                 }
-                var checkedItems = [],
+
+                // Initialization
+                function init() {
+
+                    if ($widget.data('checked') == true) {
+                        $checkbox.prop('checked', !$checkbox.is(':checked'));
+                    }
+
+                    updateDisplay();
+
+                    // Inject the icon if applicable
+                    if ($widget.find('.state-icon').length == 0) {
+                        $widget.prepend('<span class="state-icon ' + settings[$widget.data('state')].icon + '"></span>');
+                    }
+                }
+                init();
+            });
+
+            $('#get-checked-data').on('click', function(event) {
+                event.preventDefault();
+                var checkedItems = {},
                     counter = 0;
-                $("#check-list-box li.active label").each(function(idx, label) { // select ids in array
-                    checkedItems[counter] = $(label).text().trim().replace("\n ", "");
+                $("#check-list-box li.active ").each(function(idx, li) {
+                    checkedItems[counter] = $(li).text();
                     counter++;
                 });
-                console.log(checkedItems);
-                $('#deviceids_json').val(JSON.stringify(checkedItems, null, 0));
-            }
-
-            // Initialization
-            function init() {
-
-                if ($widget.data('checked') == true) {
-                    $checkbox.prop('checked', !$checkbox.is(':checked'));
-                }
-
-                updateDisplay();
-
-                // Inject the icon if applicable
-                if ($widget.find('.state-icon').length == 0) {
-                    $widget.prepend('<span class="state-icon ' + settings[$widget.data('state')].icon + '"></span>');
-                }
-            }
-            init();
-        });
-
-        $('#get-checked-data').on('click', function(event) {
-            event.preventDefault();
-            var checkedItems = {},
-                counter = 0;
-            $("#check-list-box li.active ").each(function(idx, li) {
-                checkedItems[counter] = $(li).text();
-                counter++;
+                $('#deviceids_json').val(JSON.stringify(checkedItems, null, '\t'));
             });
-            $('#deviceids_json').val(JSON.stringify(checkedItems, null, '\t'));
         });
-    });
 
 
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            Console.log("Geolocation is not supported by this browser.");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                Console.log("Geolocation is not supported by this browser.");
+            }
         }
-    }
 
-    function updateRadius(rad) {
-        console.log(circles.length + " >> ");
-        for (i = 0; i < circles.length; i++) {
-            var circle = circles[i];
-            circle.radius = rad * 1000;
+        function updateRadius(rad) {
+            console.log(circles.length + " >> ");
+            for (i = 0; i < circles.length; i++) {
+                var circle = circles[i];
+                circle.radius = rad * 1000;
+            }
+            var newCircle = circles;
+            circles[0].setMap(null);
+            circles = [];
+
+            circles = newCircle;
+            circles[0].setMap(map);
         }
-        var newCircle = circles;
-        circles[0].setMap(null);
-        circles = [];
-
-        circles = newCircle;
-        circles[0].setMap(map);
-    }
 
 
 
-    function showPosition(position) {
+        function showPosition(position) {
 
-        //  Console.log("Latitude: " + position.coords.latitude +
-        //      "<br>Longitude: " + position.coords.longitude);
-        $('#lat').val(position.coords.latitude);
-        $('#longi').val(position.coords.longitude);
-    }
-</script>
+            //  Console.log("Latitude: " + position.coords.latitude +
+            //      "<br>Longitude: " + position.coords.longitude);
+            $('#lat').val(position.coords.latitude);
+            $('#longi').val(position.coords.longitude);
+        }
+    </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CxwlDf09EE5-hIhqyMRuVZpRlK6K3PE&callback=initMap" async>
-</script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CxwlDf09EE5-hIhqyMRuVZpRlK6K3PE&callback=initMap" async>
+    </script>
 
 </html>

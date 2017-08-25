@@ -7,6 +7,7 @@ body {
     background-image: url("/images/1.jpg");
     height: 100vh;
     width: 100vw;
+    margin: 5px;
     background-repeat: no-repeat;
 }
 
@@ -15,7 +16,6 @@ body {
     border: 1px solid white;
     opacity: 0.8;
     color: white;
-    margin: 5px;
     filter: alpha(opacity=80);
     /* For IE8 and earlier */
 }
@@ -124,6 +124,10 @@ for checkbox list view
 .list-group-item-primary {
     color: rgb(255, 255, 255);
     background-color: rgb(66, 139, 202);
+}
+
+li[disabled] {
+    pointer-events: none !important;
 }
 
 
