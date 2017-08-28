@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
     deviceController.DisplayEdit(req, res);
 }).post('/:id', (req, res, next) => {
-    scheduleController.UpdateSchedule(req, res, next);
+
 });
 
 

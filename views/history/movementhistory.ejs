@@ -1,6 +1,6 @@
 <div class="container">
     <header class="page-header">
-        <h3>Dark Responsive Timeline with Bootstrap</h3>
+        <h3>Movement History</h3>
     </header>
     <div class="col-sm-9">
         <ul class="timeline">
@@ -119,3 +119,132 @@
             </li>
         </ul>
     </div>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.18.1/moment.min.js">
+    </script>
+    <script>
+        var origJSON = '{' +
+            '"report": [{' +
+            '"report_time": 1503679974,' +
+            '"latitude": 48.420643,' +
+            '"longitude": -89.245552,' +
+            '"formatted_address": "513 Beverly St, Thunder Bay, ON P7B 5S7, Canada",' +
+            '"battery": 52,' +
+            '"report_type": "GPS",' +
+            '	"accuracy": 0,' +
+            '	"cmd": "R",' +
+            '"title_key": "LOCATION_ALERT_TITLE",' +
+            '"body_key": "LOCATION_ALERT_BODY"' +
+            '	}, {' +
+            '"report_time": 1503663992,' +
+            '"latitude": 48.420601,' +
+            '"longitude": -89.245537,' +
+            '"formatted_address": "515 Pasteur Rd, Thunder Bay, ON P7B 5S7, Canada",' +
+            '"battery": 50,' +
+            '"report_type": "GPS",' +
+            '	"accuracy": 0,' +
+            '	"cmd": "R",' +
+            '"title_key": "LOCATION_ALERT_TITLE",' +
+            '"body_key": "LOCATION_ALERT_BODY"' +
+            '}, {' +
+            '	"report_time": 1503660768,' +
+            '"latitude": 48.420589,' +
+            '"longitude": -89.245522,' +
+            '"formatted_address": "515 Pasteur Rd, Thunder Bay, ON P7B 5S7, Canada",' +
+            '"battery": 48,' +
+            '"report_type": "GPS",' +
+            '"accuracy": 0,' +
+            '"cmd": "R",' +
+            '"title_key": "LOCATION_ALERT_TITLE",' +
+            '	"body_key": "LOCATION_ALERT_BODY"' +
+            '}, {' +
+            '"report_time": 1503552492,' +
+            '"latitude": 48.420601,' +
+            '"longitude": -89.245476,' +
+            '"formatted_address": "515 Pasteur Rd, Thunder Bay, ON P7B 5S7, Canada",' +
+            '"battery": 53,' +
+            '"report_type": "GPS",' +
+            '"accuracy": 0,' +
+            '"cmd": "R",' +
+            '"title_key": "LOCATION_ALERT_TITLE",' +
+            '"body_key": "LOCATION_ALERT_BODY"' +
+            '}]}';
+
+        //   var timestamp = 1382086394000;
+        var dd = [];
+        // var json = [];
+        var lastDate = null;
+        var i = 1;
+
+        origJSON = JSON.parse(origJSON);
+
+        console.log(origJSON.report.length);
+        for (j = 0; j < origJSON.report.length; j++) {
+
+            var date1 = moment('1503552492').format("MMMM DD,YYYY");
+            console.log(origJSON.report[j].report_time + "  :: " + date1);
+            if (lastDate == null) {
+                lastDate = date1;
+            }
+            dd[j] = date1;
+            if (lastDate == date1) {
+                // add time information for same date
+                // if (i == 1) {
+
+
+
+
+                //  }
+
+            } else {
+                // add new date
+                // add new time information
+
+            }
+        }
+        console.log(dd.toString() + "   >> ");
+        lastDate = date1; // update last date 
+        var time = moment(timestamp).format("hh:mm a");
+        console.log(date1 + " :: " + time + " is the time ");
+
+        // function addDateHeading(date) {
+        //     var html = ' <li>                <div class="tldate">' + date + '</div>            </li>  ';
+        // }
+
+        // function addTimeInforDivodd(date) {
+        //     // html1 for odd indexes
+        //     var html1 = '<li>' +
+        //         '<div class="tl-circ"></div>' +
+        //         '<div class="timeline-panel">' +
+        //         '<div class="tl-heading">' +
+        //         '<h4>Surprising Headline Right Here</h4>' +
+        //         ' <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3 hours ago</small></p>' +
+        //         ' </div>' +
+        //         '<div class="tl-body">' +
+        //         '<p>Lorem Ipsum and such.</p>' +
+        //         ' </div>' +
+        //         ' </div>' +
+        //         '</li>';
+
+        //     // for even
+        //     var html2 = '';
+        // }
+
+        // function addTimeInforDivEven(date) {
+        //     // html1 for odd indexes
+        //     var html1 = '<li class="timeline-inverted">' +
+        //         '<div class="tl-circ"></div>' +
+        //         '<div class="timeline-panel">' +
+        //         '<div class="tl-heading">' +
+        //         '<h4>Surprising Headline Right Here</h4>' +
+        //         ' <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3 hours ago</small></p>' +
+        //         ' </div>' +
+        //         '<div class="tl-body">' +
+        //         '<p>Lorem Ipsum and such.</p>' +
+        //         ' </div>' +
+        //         ' </div>' +
+        //         '</li>';
+
+        //     // for even
+        //     var html2 = '';
+        // }
+    </script>

@@ -1,11 +1,11 @@
-<div class="col-lg-12">
+<!--<div class="col-lg-12">
     <div class="well verticalSpace">
         <ul id="check-list-box" class="list-group checked-list-box">
-            <% for (let count = 0; count < devices.length; count++) { %>
-                <!--         <a href="/device/<%= devices[count].device_iccid %>" class="list-group-item list-group-item-action">
+            <% for (let count = 0; count < devices.length; count++) { %>-->
+<!--         <a href="/device/<%= devices[count].device_iccid %>" class="list-group-item list-group-item-action">
                     <%= devices[count].device_name %>
                 </a> -->
-                <li class="list-group-item">
+<!--   <li class="list-group-item">
                     <%= devices[count].device_name %>
                         <label class="text_transparent">
                             <%= devices[count].device_iccid %>
@@ -14,4 +14,46 @@
 
                 <% } %>
 
+    </div>-->
+<br>
+<br>
+<br>
+<div vert>
+    <h3>Device List </h3>
+    <!-- ------------------------ -->
+    <!-- FIX THE ADD BUTTON BELOW -->
+    <!-- ------------------------ -->
+    <!--<a href="/books/add" class="btn btn-primary"><i class="fa fa-plus"></i> Add a book</a>-->
+    <br>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">Device Name</th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Template Row -->
+                <% for (let count = 0; count < devices.length; count++) { %>
+                    <tr>
+                        <td class="text-center">
+                            <%= devices[count].device_name %>
+                        </td>
+
+                        <td class="text-center">
+
+                            <a href="/device/<%= devices[count].device_iccid %>" class="btn btn-primary">
+                                <i class="fa fa-pencil-square-o"></i> Edit</a>
+                        </td>
+
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
     </div>
+
+</div>
+</div>
+</div>
+</div>

@@ -13,8 +13,10 @@ module.exports.DisplayDevicesPage = (req, res) => {
 };
 
 
+
 module.exports.DisplayEdit = (req, res) => {
 
+    var session = req.session;
 
     // get a reference to the id from the url
     let id = (req.params.id);
@@ -38,7 +40,8 @@ module.exports.DisplayEdit = (req, res) => {
 
         return res.render('./device/deviceDetails', {
             title: 'Edit Device',
-            jsonResponse: jsonResponse
+            devices: session.devices,
+            email: session.email
 
         });
         // } else {

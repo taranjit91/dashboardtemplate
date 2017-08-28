@@ -7,7 +7,6 @@ body {
     background-image: url("/images/1.jpg");
     height: 100vh;
     width: 100vw;
-    margin: 5px;
     background-repeat: no-repeat;
 }
 
@@ -261,6 +260,10 @@ for checkbox list view
     text-align: center;
 }
 
+.vert {
+    height: 100vh;
+}
+
 
 /********************************* history *******************************************/
 
@@ -480,5 +483,53 @@ for checkbox list view
         border-right-width: 14px;
         left: -14px;
         right: auto;
+    }
+}
+
+@media (max-height: 900px) {
+    .Absolute-Center {
+        height: 35%;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+@media (max-height: 700px) {
+    .Absolute-Center {
+        height: 35%;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+@media (max-height: 600px) {
+    .Absolute-Center {
+        height: 55%;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+@media (max-height: 500px) {
+    .Absolute-Center {
+        height: 62%;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
     }
 }
