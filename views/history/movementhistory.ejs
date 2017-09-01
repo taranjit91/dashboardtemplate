@@ -1,126 +1,32 @@
 <div class="container">
+    <br>
+    <br>
+    <br>
+    <input type="hidden" id="jsonresp" value="<%= devices%>">
     <header class="page-header">
         <h3>Movement History</h3>
     </header>
     <div class="col-sm-9">
+        <select class="col-sm-3">
+                <% for (let count = 0; count < devices.length; count++) { %>
+            <option>
+                    <%= devices[count].device_name %>
+                  
+                                </label>
+            </option>
+            <% }%>
+        </select>
+    </div>
+    <div class="col-sm-9">
         <ul class="timeline">
-            <li>
-                <div class="tldate">Apr 2014</div>
-            </li>
 
-            <li>
-                <div class="tl-circ"></div>
-                <div class="timeline-panel">
-                    <div class="tl-heading">
-                        <h4>Surprising Headline Right Here</h4>
-                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3 hours ago</small></p>
-                    </div>
-                    <div class="tl-body">
-                        <p>Lorem Ipsum and such.</p>
-                    </div>
-                </div>
-            </li>
-
-            <li class="timeline-inverted">
-                <div class="tl-circ"></div>
-                <div class="timeline-panel">
-                    <div class="tl-heading">
-                        <h4>Breaking into Spring!</h4>
-                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 4/07/2014</small></p>
-                    </div>
-                    <div class="tl-body">
-                        <p>Hope the weather gets a bit nicer...</p>
-
-                        <p>Y'know, with more sunlight.</p>
-                    </div>
-                </div>
-            </li>
-
-            <li>
-                <div class="tldate">Mar 2014</div>
-            </li>
-
-            <li>
-                <div class="tl-circ"></div>
-                <div class="timeline-panel">
-                    <div class="tl-heading">
-                        <h4>New Apple Device Release Date</h4>
-                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3/22/2014</small></p>
-                    </div>
-                    <div class="tl-body">
-                        <p>In memory of Steve Jobs.</p>
-                    </div>
-                </div>
-            </li>
-            <li class="timeline-inverted">
-                <div class="timeline-panel">
-                    <div class="tl-heading">
-                        <h4>No icon here</h4>
-                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3/16/2014</small></p>
-                    </div>
-                    <div class="tl-body">
-                        <p>Here you'll find some beautiful photography for your viewing pleasure, courtesy of <a href="http://lorempixel.com/">lorempixel</a>.</p>
-
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="tl-circ"></div>
-                <div class="timeline-panel">
-                    <div class="tl-heading">
-                        <h4>Some Important Date!</h4>
-                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3/03/2014</small></p>
-                    </div>
-                    <div class="tl-body">
-                        <p>Write up a quick summary of the event.</p>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="timeline-panel noarrow">
-                    <div class="tl-heading">
-                        <h4>Secondary Timeline Box</h4>
-                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3/01/2014</small></p>
-                    </div>
-                    <div class="tl-body">
-                        <p>This might be a follow-up post with related info. Maybe we include some extra links, tweets, user comments, photos, etc.</p>
-                    </div>
-                </div>
-            </li>
-
-            <li>
-                <div class="tldate">Feb 2014</div>
-            </li>
-
-            <li class="timeline-inverted">
-                <div class="tl-circ"></div>
-                <div class="timeline-panel">
-                    <div class="tl-heading">
-                        <h4>The Winter Months</h4>
-                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 02/23/2014</small></p>
-                    </div>
-                    <div class="tl-body">
-                        <p>Gee time really flies when you're having fun.</p>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="tl-circ"></div>
-                <div class="timeline-panel">
-                    <div class="tl-heading">
-                        <h4>Yeah we're pretty much done here</h4>
-                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 02/11/2014</small></p>
-                    </div>
-                    <div class="tl-body">
-                        <p>Wasn't this fun though?</p>
-                    </div>
-                </div>
-            </li>
         </ul>
     </div>
+    <script src="/javascripts/jquery.js">
+    </script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.18.1/moment.min.js">
     </script>
+
     <script>
         var origJSON = '{' +
             '"report": [{' +
@@ -177,74 +83,123 @@
 
         origJSON = JSON.parse(origJSON);
 
+        var newJson = '{"report"' + ':[';
+        var objectsArr = [];
+
         console.log(origJSON.report.length);
         for (j = 0; j < origJSON.report.length; j++) {
 
-            var date1 = moment('1503552492').format("MMMM DD,YYYY");
-            console.log(origJSON.report[j].report_time + "  :: " + date1);
-            if (lastDate == null) {
-                lastDate = date1;
-            }
-            dd[j] = date1;
-            if (lastDate == date1) {
-                // add time information for same date
-                // if (i == 1) {
+            var iii = origJSON.report[j].report_time * 1000; // to convert it into date format
+            var date1 = moment(iii).format("MMMM DD,YYYY");
 
 
+            // console.log(dd.toString() + "   >> ");
+            // lastDate = date1; // update last date 
+            var time = moment(iii).format("hh:mm a");
+            console.log(" :: " + time + " is the time ");
 
+            /********************** for new json object ****************/
+            var lat = origJSON.report[j].latitude;
+            var lng = origJSON.report[j].longitude;
+            var unix_time = origJSON.report[j].report_time;
+            var title_date = '"' + date1 + '"';
+            var time_body = '"' + time + '"';
+            var addr = [];
+            addr = origJSON.report[j].formatted_address.split(",");
+            var address1 = '"' + addr[0] + ' ' + addr[1] + '"';
+            var address2 = '"' + addr[2] + ' ' + addr[3] + '"';
 
-                //  }
-
-            } else {
-                // add new date
-                // add new time information
-
-            }
+            var jsonObj = '{';
+            jsonObj = jsonObj + '"unix_time"' + ':' + unix_time + ',';
+            jsonObj = jsonObj + '"latitude"' + ':' + lat + ',';
+            jsonObj = jsonObj + '"longitude"' + ':' + lng + ',';
+            jsonObj = jsonObj + '"title_date"' + ':' + title_date + ',';
+            jsonObj = jsonObj + '"time_body"' + ':' + time_body + ',';
+            jsonObj = jsonObj + '"address1"' + ':' + address1 + ',';
+            jsonObj = jsonObj + '"address2"' + ':' + address2 + '}';
+            console.log(jsonObj);
+            objectsArr.push(jsonObj);
         }
-        console.log(dd.toString() + "   >> ");
-        lastDate = date1; // update last date 
-        var time = moment(timestamp).format("hh:mm a");
-        console.log(date1 + " :: " + time + " is the time ");
+        newJson = newJson + objectsArr + ']}';
+        console.log('>>>      ' + (newJson));
+        console.log(JSON.parse(newJson));
+        /********************** for new json object ends****************/
 
-        // function addDateHeading(date) {
-        //     var html = ' <li>                <div class="tldate">' + date + '</div>            </li>  ';
-        // }
+        /********************** set divs according to new json object ****************/
+        var newJsonArr = JSON.parse(newJson);
+        /********************** set divs according to new json object ends ****************/
 
-        // function addTimeInforDivodd(date) {
-        //     // html1 for odd indexes
-        //     var html1 = '<li>' +
-        //         '<div class="tl-circ"></div>' +
-        //         '<div class="timeline-panel">' +
-        //         '<div class="tl-heading">' +
-        //         '<h4>Surprising Headline Right Here</h4>' +
-        //         ' <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3 hours ago</small></p>' +
-        //         ' </div>' +
-        //         '<div class="tl-body">' +
-        //         '<p>Lorem Ipsum and such.</p>' +
-        //         ' </div>' +
-        //         ' </div>' +
-        //         '</li>';
+        var addHtml;
+        var lastDate = null;
+        for (j = 0; j < newJsonArr.report.length; j++) {
 
-        //     // for even
-        //     var html2 = '';
-        // }
+            var newDate = newJsonArr.report[j].title_date;
+            if (lastDate == newDate) // add data without title
+            {
+                console.log('>>> equals');
+                if (j % 2 != 0) // even div
+                {
+                    addTimeInforDivEven(newJsonArr.report[j].time_body, newJsonArr.report[j].address1, newJsonArr.report[j].address2);
+                } else { // odd div
 
-        // function addTimeInforDivEven(date) {
-        //     // html1 for odd indexes
-        //     var html1 = '<li class="timeline-inverted">' +
-        //         '<div class="tl-circ"></div>' +
-        //         '<div class="timeline-panel">' +
-        //         '<div class="tl-heading">' +
-        //         '<h4>Surprising Headline Right Here</h4>' +
-        //         ' <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3 hours ago</small></p>' +
-        //         ' </div>' +
-        //         '<div class="tl-body">' +
-        //         '<p>Lorem Ipsum and such.</p>' +
-        //         ' </div>' +
-        //         ' </div>' +
-        //         '</li>';
+                    addTimeInforDivodd(newJsonArr.report[j].time_body, newJsonArr.report[j].address1, newJsonArr.report[j].address2);
+                }
 
-        //     // for even
-        //     var html2 = '';
-        // }
+            } else { // add data with title
+                console.log(lastDate + ' **** not equals ' + newDate);
+                addDateHeading(newDate);
+                // if (j % 2 == 0) // even div
+                // {
+                //     addTimeInforDivEven(origJSON.report[j].time_body, origJSON.report[j].address1, origJSON.report[j].address2);
+                // } else { // odd div
+
+                addTimeInforDivodd(newJsonArr.report[j].time_body, newJsonArr.report[j].address1, newJsonArr.report[j].address2);
+                // }
+
+            }
+            lastDate = newDate;
+            console.log(lastDate + '  %%% ');
+            $('.timeline').html(addHtml);
+        }
+
+        function addDateHeading(dateTitle) {
+            var html = ' <li>                <div class="tldate">' + dateTitle + '</div>            </li>  ';
+            addHtml = addHtml + html;
+        }
+
+        function addTimeInforDivodd(time, address1, address2) {
+            // html1 for odd indexes
+            var html1 = '<li>' +
+                '<div class="tl-circ"></div>' +
+                '<div class="timeline-panel">' +
+                '<div class="tl-heading">' +
+                '<h4>' + address1 + '</h4>' +
+                ' <p><small class="text-muted"><i class="glyphiconglyphicon-time"></i> ' + time + '</small></p>' +
+                ' </div>' +
+                '<div class="tl-body">' +
+                '<p>' + address2 + '</p>' +
+                ' </div>' +
+                ' </div>' +
+                '</li>';
+
+            addHtml = addHtml + html1;
+        }
+
+        function addTimeInforDivEven(time, address1, address2) {
+            // html1 for odd indexes
+            var html1 = '<li class="timeline-inverted">' +
+                '<div class="tl-circ"></div>' +
+                '<div class="timeline-panel">' +
+                '<div class="tl-heading">' +
+                '<h4>' + address1 + '</h4>' +
+                ' <p><small class="text-muted"><i class="glyphiconglyphicon-time"></i> ' + time + '</small></p>' +
+                ' </div>' +
+                '<div class="tl-body">' +
+                '<p>' + address2 + '</p>' +
+                ' </div>' +
+                ' </div>' +
+                '</li>';
+
+            addHtml = addHtml + html1;
+        }
     </script>
