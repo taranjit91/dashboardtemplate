@@ -8,6 +8,8 @@ var usersController = require('../controllers/userController.js');
 
 router.get('/', usersController.RequireAuth, (req, res, next) => {
     historyController.DisplayPage(req, res, next);
+}).post('/', (req, res, next) => {
+    historyController.SearchReport(req, res, next);
 });
 
 module.exports = router;

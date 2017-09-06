@@ -1,4 +1,5 @@
 var fetch = require('node-fetch');
+var base64Img = require('base64-img'); // to convert image to base 64 and vice versa
 var usersController = require('./userController.js');
 // Displays the Details page to Update a Game
 // find the device by id and populate the form
@@ -58,7 +59,51 @@ module.exports.DisplayEdit = (req, res) => {
     });
 }
 
+module.exports.EditDevice = (req, res) => {
 
+    // get a reference to the id from the url
+    let id = (req.params.id);
+    var device_name = req.body.deviceName;
+    var path = "file:///C:/Users/developer.PR-D204-INTERN1/Desktop/dashboard_template_node/dahboardtemplate/public/images/1.jpg";
+    var device_img = path + "\1.jpg";
+    console.log(path + " >> imgggg");
+    var data = base64Img.base64Sync(path);
+    console.log(":: " + data);
+    var JSONtoUpload = '{"device":{"device_name":"' + device_name + '","device_image":' + data + '}}'
+
+    console.log("url>> " + 'api.wetraq.ca/device/' + id);
+    console.log("json to upload >> " + JSONtoUpload);
+    // find one game by its id
+    // fetch('http://api.wetraq.ca/device/' + id, {
+    //     method: 'PATCH',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'cookie': req.session.cookie
+    //     },
+    //     credentials: 'same-origin',
+    //     body: JSONtoUpload
+
+    // }).then(function(response) {
+
+    //     return response.json();
+    // }).then(function(json) {
+    //     var jsonResponse = (json);
+    //     console.log("device details >> " + JSON.stringify(jsonResponse));
+
+
+    //     return res.render('./device/deviceDetails', {
+    //         title: 'Edit Device',
+    //         jsonResponse: jsonResponse,
+
+    //     });
+
+    // }).catch(function(error) {
+    //     return res.render('./error', {
+    //         title: "error",
+    //         message: error
+    //     });
+    // });
+}
 
 module.exports.AddNewDevice = (req, res) => {
 
