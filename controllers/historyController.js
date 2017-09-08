@@ -3,7 +3,8 @@ module.exports.DisplayPage = (req, res) => {
     return res.render('./history', {
         title: 'Movement History',
         devices: session.devices,
-        email: session.email
+        email: session.email,
+        report: session.report
 
     });
 }

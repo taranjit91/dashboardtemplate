@@ -11,10 +11,17 @@ router.get('/', (req, res, next) => {
     deviceController.DisplayDevicesPage(req, res);
 });
 
-// GET the Game Details page in order to edit a new Game
+// edit the device using id
 router.get('/:id', (req, res, next) => {
     deviceController.DisplayEdit(req, res);
 }).post('/:id', (req, res, next) => {
+
+});
+
+// generate instant report using id
+router.get('/report/:id', (req, res, next) => {
+   
+}).post('/report/:id', (req, res, next) => {
 
 });
 
