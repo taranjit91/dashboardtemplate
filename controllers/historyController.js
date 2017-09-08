@@ -18,6 +18,7 @@ module.exports.SearchReport = (req, res) => {
 
     var from = aa[0].trim();
     var to = aa[1].trim();
+    report: session.report
 
     from = new Date(from).getTime() / 1000; // convert date to unix timestamp
     to = new Date(to).getTime() / 1000; // convert date to unix timestamp
