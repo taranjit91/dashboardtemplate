@@ -5,6 +5,7 @@ module.exports.DisplayPage = (req, res) => {
         title: 'Movement History',
         devices: session.devices,
         email: session.email,
+        report: '',
         t: 0 + ''
     });
 }
@@ -24,8 +25,11 @@ module.exports.SearchReport = (req, res) => {
     to = new Date(to).getTime() / 1000; // convert date to unix timestamp
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>" + from / 1000);
 
+    /*******  API CALL ************* */
+    var url = 'http://api.wetraq.ca/device/89302720396917290996' + '?from_time=' + from + '&to_time=' + to + '';
+    console.log("search url in controller >> " + url);
     // search report from api
-    fetch('http://api.wetraq.ca/device/' + 89302720396917290996 + '?from_time=' + from + '&to_time=' + to + '', {
+    fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -33,22 +37,29 @@ module.exports.SearchReport = (req, res) => {
         },
         credentials: 'same-origin'
     }).then(function(response) {
-        var responseStatus = response.status;
-        console.log("response status >> " + response.status + "   " + response.message);
-        // if (responseStatus == 200)
 
-        return res.render('./history', {
-            title: 'Movement History',
-            devices: session.devices,
-            email: session.email,
-            t: from + " :: " + to
-        });
-        // else {
-        //     return res.render('./schedule', {
-        //         title: "update failed",
-        //         message: 'Update Failed on devices'
-        //     });
-        // }
+        return response.json();
+    }).then(function(json) {
+        var jsonResponse = (json);
+
+        var ress = JSON.stringify(jsonResponse);
+
+        ress = JSON.parse(ress);
+        console.log(ress.device.report.length + " is length");
+        if (ress.device.report.length > 0) {
+            return res.render('./history', {
+                title: 'Movement History',
+                devices: session.devices,
+                report: ress.device,
+                email: session.email,
+                t: from + " :: " + to
+            });
+        } else {
+            return res.render('./history', {
+                title: "no reports",
+                message: 'No Reports found for this search. Please try again.'
+            });
+        }
 
     }).catch(function(error) {
         return res.render('./error', {
@@ -57,6 +68,7 @@ module.exports.SearchReport = (req, res) => {
         });
     });
     // search report from api ends
+    /*******  API CALL ************* */
 
     // console.log("values in search report :: " + from + " :: " + to + "  :: ");
     // session.t = from + " :: " + to;

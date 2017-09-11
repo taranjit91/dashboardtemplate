@@ -15,15 +15,12 @@ module.exports.showRegisterPage = (req, res) => {
 module.exports.register = (req, res) => {
     var username = req.body.email;
     var password = req.body.password;
-    console.log("username >> " + username + " >> " + password);
+
 
     // create authorization string
     var sha256 = createHash('sha256');
-    var passwordString = sha256.update(password, 'utf8').digest('hex')
-    console.log(passwordString)
-
+    var passwordString = sha256.update(password, 'utf8').digest('hex');
     var data = '{	"user": {"primary_email": "' + username + '","password": "' + passwordString + '","user_type":"C"}}';
-    console.log("data json >> " + data);
 
 
     fetch('http://wetraqapi.azurewebsites.net/register', {
@@ -69,9 +66,9 @@ module.exports.signIn = (req, res) => {
     var session = req.session;
     session.username = username;
 
-    console.log("username >> " + username + " >> " + password);
+
     var auth = 'Basic ' + new Buffer(username + ':' + password).toString('base64'); // create authorization string
-    console.log('auth >>> ' + auth);
+
     session.auth = auth;
     fetch('http://wetraqapi.azurewebsites.net/login', {
         method: 'GET',
@@ -84,10 +81,6 @@ module.exports.signIn = (req, res) => {
         var c = response.headers.get('set-cookie'); // undefined
         cookie = c;
         session.c = c;
-
-        console.log("setting cookie >> " + session.c);
-
-
         return response.json();
     }).then(function(json) {
         var jsonResponse = (json);
@@ -97,7 +90,7 @@ module.exports.signIn = (req, res) => {
         session.jsonResponse = jsonResponse;
         if (jsonResponse.hasOwnProperty('user')) {
             user = JSON.stringify(jsonResponse);
-            console.log("setting user variable >> " + user);
+
             return res.redirect('/geofence');
         } else {
             cookie = null;

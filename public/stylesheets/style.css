@@ -61,6 +61,10 @@ a {
     display: none;
 }
 
+#jsonresp {
+    display: none;
+}
+
 .white {
     color: white;
     height: 100%

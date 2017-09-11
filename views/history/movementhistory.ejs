@@ -2,19 +2,21 @@
     <br>
     <br>
     <br>
-    <input type="hidden" id="jsonresp" value="<%= devices%>">
+    <label id="jsonresp" style="height:0px;"><%= JSON.stringify(report)%></label>
     <header class="page-header">
         <h3>Movement History</h3>
     </header>
 
     <div class="row">
         <form method="post">
-            <label><%= t%></label>
+            <!--  <label><%= t%></label> -->
             <div class="col-sm-9">
 
                 <select class="col-sm-3" name="deviceId">
             <option disabled>Select Device</option>
-                <% for (let count = 0; count < devices.length; count++) { %>
+                <% for (let count = 0; count < devices.length; count++) { 
+                    
+                    %>
             <option>
                     <%= devices[count].device_name %>
                   
@@ -29,202 +31,255 @@
             </div>
         </form>
     </div>
-    <div class="row">
-        <div class="col-sm-9">
-            <ul class="timeline">
+    <br>
 
-            </ul>
+
+
+
+    <% if(title == "no reports"){ %>
+        <div class="alert alert-danger alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <strong>Error!</strong>
+            <%= message%>
         </div>
-    </div>
+        <% } %>
+            <!--         ********** MAP DIV  **********    -->
+            <div class="row">
+                <div class="col-sm-12" id="map">
 
-    <!--  <script src="/javascripts/jquery.js">
-    </script>-->
-    <!-- Include Required Prerequisites -->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+                </div>
+            </div>
+            <!--         ********** MAP DIV  **********    -->
+            <br>
 
-    <!-- Include Date Range Picker -->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-    <script src="https://cdn.jsdelivr.net/momentjs/2.18.1/moment.min.js">
-    </script>
+            <!--         ********** HISTORY DIV  **********    -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="timeline">
 
-    <script>
-        var $j = jQuery.noConflict();
-        $j('input[name="daterange"]').daterangepicker();
+                    </ul>
+                </div>
+            </div>
+            <!--         ********** HISTORY DIV  **********    -->
 
-        var origJSON = '{' +
-            '"report": [{' +
-            '"report_time": 1503679974,' +
-            '"latitude": 48.420643,' +
-            '"longitude": -89.245552,' +
-            '"formatted_address": "513 Beverly St, Thunder Bay, ON P7B 5S7, Canada",' +
-            '"battery": 52,' +
-            '"report_type": "GPS",' +
-            '	"accuracy": 0,' +
-            '	"cmd": "R",' +
-            '"title_key": "LOCATION_ALERT_TITLE",' +
-            '"body_key": "LOCATION_ALERT_BODY"' +
-            '	}, {' +
-            '"report_time": 1503663992,' +
-            '"latitude": 48.420601,' +
-            '"longitude": -89.245537,' +
-            '"formatted_address": "515 Pasteur Rd, Thunder Bay, ON P7B 5S7, Canada",' +
-            '"battery": 50,' +
-            '"report_type": "GPS",' +
-            '	"accuracy": 0,' +
-            '	"cmd": "R",' +
-            '"title_key": "LOCATION_ALERT_TITLE",' +
-            '"body_key": "LOCATION_ALERT_BODY"' +
-            '}, {' +
-            '	"report_time": 1503660768,' +
-            '"latitude": 48.420589,' +
-            '"longitude": -89.245522,' +
-            '"formatted_address": "515 Pasteur Rd, Thunder Bay, ON P7B 5S7, Canada",' +
-            '"battery": 48,' +
-            '"report_type": "GPS",' +
-            '"accuracy": 0,' +
-            '"cmd": "R",' +
-            '"title_key": "LOCATION_ALERT_TITLE",' +
-            '	"body_key": "LOCATION_ALERT_BODY"' +
-            '}, {' +
-            '"report_time": 1503552492,' +
-            '"latitude": 48.420601,' +
-            '"longitude": -89.245476,' +
-            '"formatted_address": "515 Pasteur Rd, Thunder Bay, ON P7B 5S7, Canada",' +
-            '"battery": 53,' +
-            '"report_type": "GPS",' +
-            '"accuracy": 0,' +
-            '"cmd": "R",' +
-            '"title_key": "LOCATION_ALERT_TITLE",' +
-            '"body_key": "LOCATION_ALERT_BODY"' +
-            '}]}';
+            <!-- Include Required Prerequisites -->
+            <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+            <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
-        //   var timestamp = 1382086394000;
-        var dd = [];
-        // var json = [];
-        var lastDate = null;
-        var i = 1;
+            <!-- Include Date Range Picker -->
+            <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+            <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+            <script src="https://cdn.jsdelivr.net/momentjs/2.18.1/moment.min.js">
+            </script>
 
-        origJSON = JSON.parse(origJSON);
+            <script>
+                var $j = jQuery.noConflict();
+                $j('input[name="daterange"]').daterangepicker();
 
-        var newJson = '{"report"' + ':[';
-        var objectsArr = [];
+                var htmString = document.getElementById('jsonresp').innerHTML;
 
-        console.log(origJSON.report.length);
-        for (j = 0; j < origJSON.report.length; j++) {
+                origJSON = JSON.parse(htmString);
+                if (origJSON.report.length < 0) {
+                    //  showErrorMessage();
+                } else {
+                    var dd = [];
+                    // var json = [];
+                    var lastDate = null;
+                    var i = 1;
 
-            var iii = origJSON.report[j].report_time * 1000; // to convert it into date format
-            var date1 = moment(iii).format("MMMM DD,YYYY");
+                    var newJson = '{"report"' + ':[';
+                    var objectsArr = [];
+
+                    for (j = 0; j < 11; j++) {
+
+                        var iii = origJSON.report[j].report_time * 1000; // to convert it into date format
+                        var date1 = moment(iii).format("MMMM DD,YYYY");
 
 
-            // console.log(dd.toString() + "   >> ");
-            // lastDate = date1; // update last date 
-            var time = moment(iii).format("hh:mm a");
-            console.log(" :: " + time + " is the time ");
 
-            /********************** for new json object ****************/
-            var lat = origJSON.report[j].latitude;
-            var lng = origJSON.report[j].longitude;
-            var unix_time = origJSON.report[j].report_time;
-            var title_date = '"' + date1 + '"';
-            var time_body = '"' + time + '"';
-            var addr = [];
-            addr = origJSON.report[j].formatted_address.split(",");
-            var address1 = '"' + addr[0] + ' ' + addr[1] + '"';
-            var address2 = '"' + addr[2] + ' ' + addr[3] + '"';
+                        // lastDate = date1; // update last date 
+                        var time = moment(iii).format("hh:mm a");
 
-            var jsonObj = '{';
-            jsonObj = jsonObj + '"unix_time"' + ':' + unix_time + ',';
-            jsonObj = jsonObj + '"latitude"' + ':' + lat + ',';
-            jsonObj = jsonObj + '"longitude"' + ':' + lng + ',';
-            jsonObj = jsonObj + '"title_date"' + ':' + title_date + ',';
-            jsonObj = jsonObj + '"time_body"' + ':' + time_body + ',';
-            jsonObj = jsonObj + '"address1"' + ':' + address1 + ',';
-            jsonObj = jsonObj + '"address2"' + ':' + address2 + '}';
-            console.log(jsonObj);
-            objectsArr.push(jsonObj);
-        }
-        newJson = newJson + objectsArr + ']}';
-        console.log('>>>      ' + (newJson));
-        console.log(JSON.parse(newJson));
-        /********************** for new json object ends****************/
 
-        /********************** set divs according to new json object ****************/
-        var newJsonArr = JSON.parse(newJson);
-        /********************** set divs according to new json object ends ****************/
+                        /********************** for new json object ****************/
+                        var lat = origJSON.report[j].latitude;
+                        var lng = origJSON.report[j].longitude;
+                        var unix_time = origJSON.report[j].report_time;
+                        var title_date = '"' + date1 + '"';
+                        var time_body = '"' + time + '"';
+                        var addr = [];
+                        var format_add = origJSON.report[j].formatted_address;
+                        var address1, address2;
+                        if (format_add != null) {
+                            addr = origJSON.report[j].formatted_address.split(",");
+                            address1 = '"' + addr[0] + ' ' + addr[1] + '"';
+                            address2 = '"' + addr[2] + ' ' + addr[3] + '"';
+                        } else {
+                            address1 = '';
+                            address2 = '';
+                        }
+                        var jsonObj = '{';
+                        jsonObj = jsonObj + '"unix_time"' + ':' + unix_time + ',';
+                        jsonObj = jsonObj + '"latitude"' + ':' + lat + ',';
+                        jsonObj = jsonObj + '"longitude"' + ':' + lng + ',';
+                        jsonObj = jsonObj + '"title_date"' + ':' + title_date + ',';
+                        jsonObj = jsonObj + '"time_body"' + ':' + time_body + ',';
+                        jsonObj = jsonObj + '"address1"' + ':' + address1 + ',';
+                        jsonObj = jsonObj + '"address2"' + ':' + address2 + '}';
 
-        var addHtml;
-        var lastDate = null;
-        for (j = 0; j < newJsonArr.report.length; j++) {
+                        objectsArr.push(jsonObj);
+                    }
 
-            var newDate = newJsonArr.report[j].title_date;
-            if (lastDate == newDate) // add data without title
-            {
-                console.log('>>> equals');
-                if (j % 2 != 0) // even div
-                {
-                    addTimeInforDivEven(newJsonArr.report[j].time_body, newJsonArr.report[j].address1, newJsonArr.report[j].address2);
-                } else { // odd div
+                    newJson = newJson + objectsArr + ']}';
 
-                    addTimeInforDivodd(newJsonArr.report[j].time_body, newJsonArr.report[j].address1, newJsonArr.report[j].address2);
+                    /********************** for new json object ends****************/
+
+                    /********************** set divs according to new json object ****************/
+                    var newJsonArr = JSON.parse(newJson);
+                    /********************** set divs according to new json object ends ****************/
+
+                    var addHtml;
+                    var lastDate = null;
+                    for (j = 0; j < newJsonArr.report.length; j++) {
+
+                        var newDate = newJsonArr.report[j].title_date;
+                        if (lastDate == newDate) // add data without title
+                        {
+
+                            if (j % 2 != 0) // even div
+                            {
+                                addTimeInforDivEven(newJsonArr.report[j].time_body, newJsonArr.report[j].address1, newJsonArr.report[j].address2);
+                            } else { // odd div
+
+                                addTimeInforDivodd(newJsonArr.report[j].time_body, newJsonArr.report[j].address1, newJsonArr.report[j].address2);
+                            }
+
+                        } else { // add data with title
+
+                            addDateHeading(newDate);
+                            // if (j % 2 == 0) // even div
+                            // {
+                            //     addTimeInforDivEven(origJSON.report[j].time_body, origJSON.report[j].address1, origJSON.report[j].address2);
+                            // } else { // odd div
+
+                            addTimeInforDivodd(newJsonArr.report[j].time_body, newJsonArr.report[j].address1, newJsonArr.report[j].address2);
+                            // }
+
+                        }
+                        lastDate = newDate;
+
+                        $j('.timeline').html(addHtml);
+                    }
+
+                    function addDateHeading(dateTitle) {
+                        var html = ' <li>                <div class="tldate">' + dateTitle + '</div>            </li>  ';
+                        if (addHtml == null) {
+                            addHtml = html;
+                        } else {
+                            addHtml = addHtml + html;
+                        }
+                    }
+
+                    function addTimeInforDivodd(time, address1, address2) {
+                        // html1 for odd indexes
+                        var html1 = '<li>' +
+                            '<div class="tl-circ"></div>' +
+                            '<div class="timeline-panel">' +
+                            '<div class="tl-heading">' +
+                            '<h4>' + address1 + '</h4>' +
+                            ' <p><small class="text-muted"><i class="glyphiconglyphicon-time"></i> ' + time + '</small></p>' +
+                            ' </div>' +
+                            '<div class="tl-body">' +
+                            '<p>' + address2 + '</p>' +
+                            ' </div>' +
+                            ' </div>' +
+                            '</li>';
+
+                        addHtml = addHtml + html1;
+                    }
+
+                    function addTimeInforDivEven(time, address1, address2) {
+                        // html1 for odd indexes
+                        var html1 = '<li class="timeline-inverted">' +
+                            '<div class="tl-circ"></div>' +
+                            '<div class="timeline-panel">' +
+                            '<div class="tl-heading">' +
+                            '<h4>' + address1 + '</h4>' +
+                            ' <p><small class="text-muted"><i class="glyphiconglyphicon-time"></i> ' + time + '</small></p>' +
+                            ' </div>' +
+                            '<div class="tl-body">' +
+                            '<p>' + address2 + '</p>' +
+                            ' </div>' +
+                            ' </div>' +
+                            '</li>';
+
+                        addHtml = addHtml + html1;
+                    }
+
+                    var map;
+
+                    function initMap() {
+
+
+                        var directionsService = new google.maps.DirectionsService;
+                        var directionsDisplay = new google.maps.DirectionsRenderer;
+
+
+
+                        map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 20,
+                            center: {
+                                //  lat: 43.775293,
+                                //  lng: -79.257825
+                                lat: newJsonArr.report[0].latitude,
+                                lng: newJsonArr.report[0].longitude
+                            },
+                            mapTypeId: google.maps.MapTypeId.roadmap
+
+                        });
+                        // map.setTilt(45);
+
+
+
+                        var path = [];
+                        for (let markerCount = 0; markerCount < newJsonArr.report.length; markerCount++) {
+
+                            path.push(new google.maps.LatLng(newJsonArr.report[markerCount].latitude, newJsonArr.report[markerCount].longitude));
+                            var marker1 = new google.maps.Marker({
+                                position: {
+                                    lat: newJsonArr.report[markerCount].latitude,
+                                    lng: newJsonArr.report[markerCount].longitude
+                                },
+
+                                map: map,
+                                title: newJsonArr.report[markerCount].address1
+                            });
+                            marker1.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+                        }
+
+                        var flightPath = new google.maps.Polyline({
+                            path: path,
+                            strokeColor: "#0000FF",
+                            strokeOpacity: 0.8,
+                            strokeWeight: 3
+                        });
+                        flightPath.setMap(map);
+                    }
+
+                    // function showErrorMessage(msg) {
+                    //     var html = '<div class="alert alert-danger alert-dismissable">' +
+                    //         '<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>' +
+                    //         '<strong>Error!</strong>' +
+                    //         +msg +
+                    //         '</div>';
+                    // }
+
                 }
 
-            } else { // add data with title
-                console.log(lastDate + ' **** not equals ' + newDate);
-                addDateHeading(newDate);
-                // if (j % 2 == 0) // even div
-                // {
-                //     addTimeInforDivEven(origJSON.report[j].time_body, origJSON.report[j].address1, origJSON.report[j].address2);
-                // } else { // odd div
 
-                addTimeInforDivodd(newJsonArr.report[j].time_body, newJsonArr.report[j].address1, newJsonArr.report[j].address2);
-                // }
+                // button click function
 
-            }
-            lastDate = newDate;
-            console.log(lastDate + '  %%% ');
-            $j('.timeline').html(addHtml);
-        }
-
-        function addDateHeading(dateTitle) {
-            var html = ' <li>                <div class="tldate">' + dateTitle + '</div>            </li>  ';
-            addHtml = addHtml + html;
-        }
-
-        function addTimeInforDivodd(time, address1, address2) {
-            // html1 for odd indexes
-            var html1 = '<li>' +
-                '<div class="tl-circ"></div>' +
-                '<div class="timeline-panel">' +
-                '<div class="tl-heading">' +
-                '<h4>' + address1 + '</h4>' +
-                ' <p><small class="text-muted"><i class="glyphiconglyphicon-time"></i> ' + time + '</small></p>' +
-                ' </div>' +
-                '<div class="tl-body">' +
-                '<p>' + address2 + '</p>' +
-                ' </div>' +
-                ' </div>' +
-                '</li>';
-
-            addHtml = addHtml + html1;
-        }
-
-        function addTimeInforDivEven(time, address1, address2) {
-            // html1 for odd indexes
-            var html1 = '<li class="timeline-inverted">' +
-                '<div class="tl-circ"></div>' +
-                '<div class="timeline-panel">' +
-                '<div class="tl-heading">' +
-                '<h4>' + address1 + '</h4>' +
-                ' <p><small class="text-muted"><i class="glyphiconglyphicon-time"></i> ' + time + '</small></p>' +
-                ' </div>' +
-                '<div class="tl-body">' +
-                '<p>' + address2 + '</p>' +
-                ' </div>' +
-                ' </div>' +
-                '</li>';
-
-            addHtml = addHtml + html1;
-        }
-    </script>
+                $("#myModal").modal('show');
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CxwlDf09EE5-hIhqyMRuVZpRlK6K3PE&callback=initMap" async>
+            </script>
