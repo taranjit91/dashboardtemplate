@@ -14,6 +14,7 @@ var reports = require('./routes/instantreports');
 var geofence = require('./routes/geofence');
 var plans = require('./routes/plans');
 var history = require('./routes/history');
+var adminuser = require('./routes/adminuser');
 
 // setting routes ends
 
@@ -55,6 +56,7 @@ app.use('/geofence', geofence);
 app.use('/instantReports', reports);
 app.use('/history', history);
 app.use('/plans', plans);
+app.use('/adminuser', adminuser);
 
 
 // catch 404 and forward to error handler

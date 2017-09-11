@@ -91,7 +91,16 @@ module.exports.signIn = (req, res) => {
         if (jsonResponse.hasOwnProperty('user')) {
             user = JSON.stringify(jsonResponse);
 
-            return res.redirect('/geofence');
+            if (jsonResponse.user.user_type == 'A') // check if user is admin : redirect to admin user
+            {
+                session.title = "Admin";
+                return res.redirect('/adminuser');
+
+            } else { // redirect for corporate user
+                session.title = "Dashboard";
+                return res.redirect('/geofence');
+            }
+            // also check condition for mobile users
         } else {
             cookie = null;
             return res.render('./login', {
