@@ -21,13 +21,14 @@ module.exports.DisplayEdit = (req, res) => {
 
     // get a reference to the id from the url
     let id = (req.params.id);
+
     console.log("url>> " + 'api.wetraq.ca/device/' + id);
     // find one game by its id
     fetch('http://api.wetraq.ca/device/' + id, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'cookie': usersController.cookieValue()
+            'cookie': session.c
         },
         credentials: 'same-origin',
 
@@ -62,14 +63,13 @@ module.exports.DisplayEdit = (req, res) => {
 module.exports.EditDevice = (req, res) => {
 
     // get a reference to the id from the url
+    var session = req.session;
     let id = (req.params.id);
     var device_name = req.body.deviceName;
-    var path = "file:///C:/Users/developer.PR-D204-INTERN1/Desktop/dashboard_template_node/dahboardtemplate/public/images/1.jpg";
-    var device_img = path + "\1.jpg";
-    console.log(path + " >> imgggg");
-    var data = base64Img.base64Sync(path);
-    console.log(":: " + data);
-    var JSONtoUpload = '{"device":{"device_name":"' + device_name + '","device_image":' + data + '}}'
+
+    var base64st = req.body.base;
+    console.log(":: " + device_name);
+    var JSONtoUpload = '{"device":{"device_name":"' + device_name + '","device_image":' + base64st + '}}'
 
     console.log("url>> " + 'api.wetraq.ca/device/' + id);
     console.log("json to upload >> " + JSONtoUpload);
@@ -78,20 +78,21 @@ module.exports.EditDevice = (req, res) => {
     //     method: 'PATCH',
     //     headers: {
     //         'Content-Type': 'application/json',
-    //         'cookie': req.session.cookie
+    //         'cookie': usersController.cookieValue()
     //     },
     //     credentials: 'same-origin',
     //     body: JSONtoUpload
 
     // }).then(function(response) {
 
+    //     console.log("device details edit >> " + response.status);
     //     return response.json();
     // }).then(function(json) {
     //     var jsonResponse = (json);
-    //     console.log("device details >> " + JSON.stringify(jsonResponse));
+    //     console.log("device details edit >> " + JSON.stringify(jsonResponse));
 
 
-    //     return res.render('./device/deviceDetails', {
+    //     return res.render('./device', {
     //         title: 'Edit Device',
     //         jsonResponse: jsonResponse,
 

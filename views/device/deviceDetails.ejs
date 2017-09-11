@@ -14,7 +14,10 @@
                     </div>
                     <div class="form-group">
                         <label for="ImageTextField">Device Image</label>
-                        <input type="file" name="img" value="fileupload" id="fileupload" accept="image/*">
+                        <input type='file' id="asd" />
+                        <br>
+                        <img id="img" src="//placehold.it/1x1/" />
+                        <textarea id="base" name="base"></textarea >
                     </div>
 
                     <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Submit</button>
@@ -23,4 +26,22 @@
             </div>
         </div>
     </div>
+    <script>
+        function el(id) {
+            return document.getElementById(id);
+        } // Get elem by ID
+
+        function readImage() {
+            if (this.files && this.files[0]) {
+                var FR = new FileReader();
+                FR.onload = function(e) {
+                    el("img").src = e.target.result;
+                    el("base").innerHTML = e.target.result;
+                };
+                FR.readAsDataURL(this.files[0]);
+            }
+        }
+
+        el("asd").addEventListener("change", readImage, false);
+    </script>
     <% include ../partials/scripts.ejs %>
