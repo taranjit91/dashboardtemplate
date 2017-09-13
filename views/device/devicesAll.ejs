@@ -30,33 +30,42 @@
             <thead>
                 <tr>
                     <th class="text-center">Device Name</th>
+                    <th class="text-center">Device Image</th>
                     <th class="text-center">Instant Report</th>
                     <th class="text-center"></th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Template Row -->
-                <% for (let count = 0; count < devices.length; count++) { %>
+                <% for (let count = 0; count <device_all.length; count++) { %>
                     <tr>
                         <td class="text-center">
-                            <%= devices[count].device_name %>
+                            <%= device_all[count].device_name %>
                         </td>
                         <td class="text-center">
+                            <%   if(device_all[count].device_image != null) {%>
+                                <img style="height: 40px;width:40px;" src='<%= devices[count].device_image %>' /></td>
+                        <%} else{               }%>
+                            </td>
+                            <td class="text-center">
 
-                            <!-- <a href="/device/<%= devices[count].device_iccid %>" class="btn btn-primary">
+                                <!-- <a href="/device/<%= devices[count].device_iccid %>" class="btn btn-primary">
                                 <i class="fa fa-map"></i> Generate Report</a>-->
-                            <button class="btn btn-primary" onclick="myFunction()">Generate Request</button>
-                        </td>
-                        <td class="text-center">
+                                <button class="btn btn-primary" onclick="myFunction()">Generate Request</button>
+                            </td>
+                            <td class="text-center">
 
-                            <a href="/device/<%= devices[count].device_iccid %>" class="btn btn-primary">
-                                <i class="fa fa-pencil-square-o"></i> Edit</a>
-                        </td>
+                                <a href="/device/<%= devices[count].device_iccid %>" class="btn btn-primary">
+                                    <i class="fa fa-pencil-square-o"></i> Edit</a>
+                            </td>
 
                     </tr>
                     <% } %>
             </tbody>
         </table>
+    </div>
+    <div class="col-md-offset-1 col-md-10 text-center">
+        <ul class="pagination pagination-lg pager" id="myPager"></ul>
     </div>
 
     <!-- modal div -->

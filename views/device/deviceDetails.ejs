@@ -10,14 +10,14 @@
                 <form class="form" method="post">
                     <div class="form-group">
                         <label for="NameTextField">Name</label>
-                        <input type="text" class="form-control" id="NameTextField" placeholder="Device Name" name="deviceName" value="<%= %>" required>
+                        <input type="text" class="form-control" id="NameTextField" placeholder="Device Name" name="deviceName" value="<%= device_name%>" required>
                     </div>
                     <div class="form-group">
                         <label for="ImageTextField">Device Image</label>
                         <input type='file' id="asd" />
                         <br>
-                        <img id="img" src="//placehold.it/1x1/" />
-                        <textarea id="base" name="base"></textarea >
+                        <img id="img" src="<%=device_image %>" />
+                        <textarea class="" id="base" name="base"></textarea >
                     </div>
 
                     <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Submit</button>

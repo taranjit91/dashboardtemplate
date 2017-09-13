@@ -84,11 +84,12 @@ module.exports.signIn = (req, res) => {
         return response.json();
     }).then(function(json) {
         var jsonResponse = (json);
-        session.devices = jsonResponse.user.device;
-        session.email = jsonResponse.user.primary_email;
-        session.title = "Dashboard";
-        session.jsonResponse = jsonResponse;
+
         if (jsonResponse.hasOwnProperty('user')) {
+            session.devices = jsonResponse.user.device;
+            session.email = jsonResponse.user.primary_email;
+            session.title = "Dashboard";
+            session.jsonResponse = jsonResponse;
             user = JSON.stringify(jsonResponse);
 
             if (jsonResponse.user.user_type == 'A') // check if user is admin : redirect to admin user

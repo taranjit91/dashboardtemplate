@@ -65,6 +65,10 @@ a {
     display: none;
 }
 
+#base {
+    display: none;
+}
+
 .white {
     color: white;
     height: 100%
