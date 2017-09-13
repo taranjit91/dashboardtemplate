@@ -1,78 +1,79 @@
 <% include ../partials/headcontent.ejs %>
 
     <!-- MAIN CONTENT -->
-    <div>
+    <div class="vert">
         <div class="row">
-            <div class="col-md-offset-1 col-md-10">
-                <h3>Users List </h3>
-                <!-- ------------------------ -->
-                <!-- FIX THE ADD BUTTON BELOW -->
-                <!-- ------------------------ -->
-                <a href="/adminuser/add" class="btn btn-primary"><i class="fa fa-plus"></i> Add a user</a>
-                <br>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped ">
-                        <thead>
-                            <tr>
-                                <th>User email</th>
-                                <th class="text-center">Payment Plan</th>
-                                <th class="text-center"></th>
-                                <th class="text-center"></th>
-                                <th class="text-center"></th>
-                                <th class="text-center"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Template Row -->
-                            <% for (let count = 0; count < 20; count++) { %>
-                                <tr>
-                                    <td>
-                                        Name
-                                        <%= count %>
-                                    </td>
-                                    <td class="text-center"> $ 3
-                                        <%= count %>
-                                    </td>
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-md-3">
 
-                                    <td class="text-center">
-                                        <!-- ------------------------ -->
-                                        <!-- RESET PASSWORD  -->
-                                        <!-- ------------------------ -->
+                    <% include ./navBar_admin.ejs %>
+
+                </div>
+                <div class="col-md-7">
+                    <h3>Users List </h3>
+                    <!-- ------------------------ -->
+                    <!-- FIX THE ADD BUTTON BELOW -->
+                    <!-- ------------------------ -->
+                    <a href="/adminuser/add" class="btn btn-primary"><i class="fa fa-plus"></i> Add a user</a>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped ">
+                            <thead>
+                                <tr>
+                                    <th>User email</th>
+                                    <th class="text-center">Payment Plan</th>
+                                    <th class="text-center"></th>
+                                    <th class="text-center"></th>
+                                    <th class="text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Template Row -->
+                                <% for (let count = 0; count < 20; count++) { %>
+                                    <tr>
+                                        <td>
+                                            Name
+                                            <%= count %>
+                                        </td>
+                                        <td class="text-center"> $ 3
+                                            <%= count %>
+                                        </td>
+
+                                        <!--    <td class="text-center">                                           
                                         <a href="#" class="btn btn-primary">
                                             <i class="fa fa-key"></i> Reset Password</a>
-                                    </td>
-                                    <td class="text-center">
-                                        <!-- ------------------------ -->
-                                        <!-- EDIT BUTTON  -->
-                                        <!-- ------------------------ -->
-                                        <a href="#" class="btn btn-primary">
-                                            <i class="fa fa-trash-o"></i> Edit</a>
-                                    </td>
+                                        </td>-->
+                                        <td class="text-center">
+                                            <!-- ------------------------ -->
+                                            <!-- EDIT BUTTON  -->
+                                            <!-- ------------------------ -->
+                                            <a href="#" class="btn btn-primary">
+                                                <i class="fa fa-trash-o"></i> Edit</a>
+                                        </td>
 
-                                    <td class="text-center">
-                                        <!-- ------------------------ -->
-                                        <!--  DEACTIVATE BUTTON  -->
-                                        <!-- ------------------------ -->
-                                        <a href="#" class="btn btn-danger">
-                                            <i class="fa fa-lock"></i> Deactivate</a>
-                                    </td>
-                                    <td class="text-center">
-                                        <!-- ------------------------ -->
-                                        <!--  DELETE BUTTON  -->
-                                        <!-- ------------------------ -->
-                                        <a href="#" class="btn btn-danger">
-                                            <i class="fa fa-trash-o"></i> Delete</a>
-                                    </td>
-                                </tr>
-                                <% } %>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-offset-1 col-md-10 text-center">
-                    <ul class="pagination pagination-lg pager" id="myPager"></ul>
+                                        <td class="text-center">
+                                            <!-- ------------------------ -->
+                                            <!--  DEACTIVATE BUTTON  -->
+                                            <!-- ------------------------ -->
+                                            <a href="#" class="btn btn-danger">
+                                                <i class="fa fa-lock"></i> Deactivate</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <!-- ------------------------ -->
+                                            <!--  DELETE BUTTON  -->
+                                            <!-- ------------------------ -->
+                                            <a href="#" class="btn btn-danger">
+                                                <i class="fa fa-trash-o"></i> Delete</a>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>
 
-    <% include ../partials/scripts.ejs %>
+        <% include ../partials/scripts.ejs %>
