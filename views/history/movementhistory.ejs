@@ -17,15 +17,18 @@
                 <% for (let count = 0; count < devices.length; count++) { 
                     
                     %>
-            <option>
+            <option value="<%= devices[count].device_iccid %>">
                     <%= devices[count].device_name %>
                   
                               
             </option>
             <% }%>
+            <% if(daterange == null || daterange == ''){
+                daterange='08/01/2017 - 08/31/2017';
+            } %>
         </select>
                 <div class="col-sm-1"></div>
-                <input class="col-sm-5" type="text" name="daterange" value="08/01/2017 - 08/31/2017" />
+                <input class="col-sm-5" type="text" id="daterange" name="daterange" value="<%= daterange %>" />
                 <div class="col-sm-1"></div>
                 <button class=" btn-success btn-sm ">Search</button>
             </div>
@@ -43,12 +46,12 @@
             <%= message%>
         </div>
         <% } %>
-            <!--         ********** MAP DIV  **********    -->
+            <!--         ********** MAP DIV  **********   
             <div class="row">
                 <div class="col-sm-12" id="map">
 
                 </div>
-            </div>
+            </div> -->
             <!--         ********** MAP DIV  **********    -->
             <br>
 
@@ -79,7 +82,8 @@
                 var htmString = document.getElementById('jsonresp').innerHTML;
 
                 origJSON = JSON.parse(htmString);
-                if (origJSON.report.length < 0) {
+                console.log(origJSON + " >>>> ");
+                if ((origJSON == null || origJSON == undefined || origJSON == '')) {
                     //  showErrorMessage();
                 } else {
                     var dd = [];
@@ -90,7 +94,7 @@
                     var newJson = '{"report"' + ':[';
                     var objectsArr = [];
 
-                    for (j = 0; j < 11; j++) {
+                    for (j = 0; j < origJSON.report.length; j++) {
 
                         var iii = origJSON.report[j].report_time * 1000; // to convert it into date format
                         var date1 = moment(iii).format("MMMM DD,YYYY");
@@ -279,7 +283,7 @@
 
                 // button click function
 
-                $("#myModal").modal('show');
+                //    $("#myModal").modal('show');
             </script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4CxwlDf09EE5-hIhqyMRuVZpRlK6K3PE&callback=initMap" async>
             </script>

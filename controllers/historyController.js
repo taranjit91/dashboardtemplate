@@ -6,7 +6,8 @@ module.exports.DisplayPage = (req, res) => {
         devices: session.devices,
         email: session.email,
         report: '',
-        t: 0 + ''
+        t: 0 + '',
+        daterange: ''
     });
 }
 
@@ -23,10 +24,10 @@ module.exports.SearchReport = (req, res) => {
 
     from = new Date(from).getTime() / 1000; // convert date to unix timestamp
     to = new Date(to).getTime() / 1000; // convert date to unix timestamp
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>" + from / 1000);
+
 
     /*******  API CALL ************* */
-    var url = 'http://api.wetraq.ca/device/89302720396917290996' + '?from_time=' + from + '&to_time=' + to + '';
+    var url = 'http://api.wetraq.ca/device/' + deviceId + '?from_time=' + from + '&to_time=' + to + '';
     console.log("search url in controller >> " + url);
     // search report from api
     fetch(url, {
@@ -52,12 +53,18 @@ module.exports.SearchReport = (req, res) => {
                 devices: session.devices,
                 report: ress.device,
                 email: session.email,
-                t: from + " :: " + to
+                t: from + " :: " + to,
+                daterange: daterange
             });
         } else {
             return res.render('./history', {
                 title: "no reports",
-                message: 'No Reports found for this search. Please try again.'
+                devices: session.devices,
+                report: null,
+                email: session.email,
+                t: null,
+                message: 'No Reports found for this search. Please try again.',
+                daterange: daterange
             });
         }
 
@@ -70,12 +77,5 @@ module.exports.SearchReport = (req, res) => {
     // search report from api ends
     /*******  API CALL ************* */
 
-    // console.log("values in search report :: " + from + " :: " + to + "  :: ");
-    // session.t = from + " :: " + to;
-    // return res.render('./history', {
-    //     title: 'Movement History',
-    //     devices: session.devices,
-    //     email: session.email,
-    //     t: from + " :: " + to,
-    // });
+
 }
