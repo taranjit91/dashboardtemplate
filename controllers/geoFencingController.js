@@ -5,7 +5,7 @@ var usersController = require('./userController.js');
 
 module.exports.DisplayPage = (req, res) => {
     var session = req.session;
-    return res.render('./dashboard_user', {
+    return res.render('./dashboard_testing', {
         title: ' Geofencing',
         devices: session.devices,
         email: session.email,
