@@ -220,4 +220,9 @@ module.exports.AddNewDevice = (req, res) => {
             message: error
         });
     });
+
+    function updateGeofencingOff()
+    {
+        
+    }
 }
