@@ -12,7 +12,7 @@
 <body>
     <div id="page-wrapper" class="vert">
 
-        <div class="container-fluid">
+        <div class="container">
 
             <!-- Page Heading -->
             <div class="row">
@@ -22,11 +22,11 @@
 
                     </div>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-9" style="background:white;">
 
                     <!-- Page Heading -->
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
                             <h2 class="page-header">
                                 <%= title %>
                             </h2>
@@ -36,60 +36,59 @@
 
 
                     <form method="post">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <!--  <% include ./partials/map.ejs %>-->
+                        <div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <% include ./partials/map.ejs %>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-group">
-                                <input type="hidden" id="deviceids_json" name="deviceids_json">
-                                <label id='checked_devices'></label>
-                                <input type="text" id='unchecked_devices' value="abc"/>
-                                <label for="sel1">Select radius for Geofence in KMS:</label>
-                                <!--   <select name="radius" class="form-control" id="sel1">
+                            <div class="row">
+                                <div class="input-group">
+                                    <input type="hidden" id="deviceids_json" name="deviceids_json">
+                                    <input id='checked_devices' name='unchecked_devices'>
+                                    <input type="hidden" id='unchecked_devices' name='unchecked_devices' value="abc" />
+                                    <label for="sel1">Select radius for Geofence in KMS:</label>
+                                    <!--   <select name="radius" class="form-control" id="sel1">
                                                 <option>1</option>
                                  <option>2</option>
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
                                     </select> -->
+                                </div>
+                                <br>
                             </div>
-                            <br>
-                            <div id="seekbar-container-blue" style="width:500px;height:30px"></div>
-
-                            <input name="seekbar_val" id="seekbar-val">
-                            <h3 class="purpleText verticalSpace">Select Devices</h3>
+                            <div class="row">
+                                <div id="seekbar-container-blue" style="width:500px;height:30px"></div>
+                            </div>
+                            <div class="row">
+                                <input name="seekbar_val" id="seekbar-val">
+                                <h3 class="purpleText verticalSpace">Turn On/Off geofencing for devices</h3>
+                            </div>
                             <div class="row">
                                 <input name='lat' id='lat' type="hidden">
                                 <input name='longi' id='longi' type="hidden">
                             </div>
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <% include ./partials/map.ejs %>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="well verticalSpace">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-striped ">
-                                            <thead>
+                                <div class="table-responsive col-sm-12" style="width: 100%;">
+                                    <table class="table table-bordered table-striped ">
+                                        <thead>
+                                            <tr>
+                                                <th>Device name</th>
+                                                <th class="text-center">Geofence</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for (let count = 0; count < devices.length; count++) { %>
+
                                                 <tr>
-                                                    <th>Device name</th>
-                                                    <th class="text-center">Geofence</th>
+                                                    <td>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% for (let count = 0; count < devices.length; count++) { %>
-
-                                                    <tr>
-                                                        <td>
-
-                                                            <%= devices[count].device_name %>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <label class="switch">
+                                                        <%= devices[count].device_name %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <label class="switch">
                                                                         <%if(devices[count].geofencing ==true){ %>
                                                                         <input class="aq" id=<%=devices[count].device_iccid %> onclick="reply_click(this.id)" type="checkbox" checked>
                                                                         <% } else {%>
@@ -98,13 +97,12 @@
                                                                         <span class="slider round"></span>
                                                                       </label>
 
-                                                        </td>
-                                                        <% }%>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
+                                                    </td>
+                                                    <% }%>
+                                        </tbody>
+                                    </table>
                                 </div>
+
                             </div>
                             <button class=" btn-success btn-lg ">Submit</button>
                     </form>
@@ -114,7 +112,8 @@
 
             </div>
         </div>
-        <!-- /.container-fluid -->
+    </div>
+    <!-- /.container-fluid -->
 
 
 
@@ -128,59 +127,55 @@
     </script>
     <link rel="stylesheet" type="text/css" href="./stylesheets/seekbar.css" />
     <script>
-        var checked_items=[];
-        var unchecked_items=[];
+        var checked_items = [];
+        var unchecked_items = [];
 
-       $ (function() {
-   // your page initialization code here
-   // the DOM will be available here
-   $(".aq:checked").each(function(){
-     //  console.log($(this).attr('id'));
-         //  alert($(this).attr('id'));
-         var id =$(this).attr('id');
-         checked_items.push(id);
-        });
-        $(".aq:not(:checked)").each(function(){
-              console.log($(this).attr('id'));
-              var id =$(this).attr('id');
-         unchecked_items.push(id);
-               });
-               updateJSONArrays(checked_items,unchecked_items);
+        $(function() {
+            // your page initialization code here
+            // the DOM will be available here
+            $(".aq:checked").each(function() {
+                //  console.log($(this).attr('id'));
+                //  alert($(this).attr('id'));
+                var id = $(this).attr('id');
+                checked_items.push(id);
             });
-     function reply_click(clicked_id)
-        {
+            $(".aq:not(:checked)").each(function() {
+                console.log($(this).attr('id'));
+                var id = $(this).attr('id');
+                unchecked_items.push(id);
+            });
+            updateJSONArrays(checked_items, unchecked_items);
+        });
+
+        function reply_click(clicked_id) {
             var id = clicked_id;
-           var value= document.getElementById(id).checked;
-            if(value)
-            {
-                if(checked_items.indexOf(id) == -1)
-                {
+            var value = document.getElementById(id).checked;
+            if (value) {
+                if (checked_items.indexOf(id) == -1) {
                     checked_items.push(id);
-                    unchecked_items.splice(unchecked_items.indexOf(id),1);
+                    unchecked_items.splice(unchecked_items.indexOf(id), 1);
                 }
                 console.log("@@@@@@@checekd ############");
-            }else{
-                if(unchecked_items.indexOf(id)== -1)
-                {
+            } else {
+                if (unchecked_items.indexOf(id) == -1) {
                     unchecked_items.push(id);
-                    checked_items.splice(checked_items.indexOf(id),1);
-                    console.log(")))))))))))))))"+id);
+                    checked_items.splice(checked_items.indexOf(id), 1);
+                    console.log(")))))))))))))))" + id);
                 }
                 console.log("not checked &&& ############");
             }
             console.log("called ############");
             console.log(checked_items.toString());
-            updateJSONArrays(checked_items,unchecked_items);
+            updateJSONArrays(checked_items, unchecked_items);
         }
-  // });
+        // });
 
-  function updateJSONArrays(checked_items,unchecked_items)
-  {
-      console.log("function update called::: ");
-      $('#checked_devices').html(JSON.stringify(checked_items, null, '\t'));
-   
-    $('#unchecked_devices').val(JSON.stringify(unchecked_items, null, '\t'));
-  }
+        function updateJSONArrays(checked_items, unchecked_items) {
+            console.log("function update called::: ");
+            $('#checked_devices').html(JSON.stringify(checked_items, null, '\t'));
+
+            $('#unchecked_devices').val(JSON.stringify(unchecked_items, null, '\t'));
+        }
     </script>
     <script>
         var circles = []; // store all circles in array 

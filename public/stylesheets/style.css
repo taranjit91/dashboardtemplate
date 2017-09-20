@@ -69,6 +69,18 @@ a {
     display: none;
 }
 
+#checked_devices {
+    display: none;
+}
+
+#unchecked_devices {
+    display: none;
+}
+
+#base {
+    display: none;
+}
+
 .white {
     color: white;
     height: 100%
@@ -266,10 +278,6 @@ for checkbox list view
     font-size: 0.95em;
     font-weight: bold;
     text-align: center;
-}
-
-.vert {
-    height: 100vh;
 }
 
 
