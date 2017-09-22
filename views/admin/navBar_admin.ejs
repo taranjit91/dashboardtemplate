@@ -102,18 +102,30 @@
                     <li>
                         <a href="plans"><i class="fa fa-fw  fa-money"></i> Plan</a>
                     </li>
-                    <%}  else {%>
-                        <li>
+                    <%} else if((title == "WeTraq")){%>
+                        <li class="active">
                             <a href="users"><i class="fa fa-fw fa-dashboard"></i> Users</a>
                         </li>
 
                         <li>
                             <a href="devices_admin"><i class="fa fa-fw fa-mobile-phone"></i>Devices</a>
                         </li>
-                        <li class="active">
+
+                        <li>
                             <a href="plans"><i class="fa fa-fw  fa-money"></i> Plan</a>
                         </li>
-                        <%}%>
+                        <%}  else {%>
+                            <li>
+                                <a href="users"><i class="fa fa-fw fa-dashboard"></i> Users</a>
+                            </li>
+
+                            <li>
+                                <a href="devices_admin"><i class="fa fa-fw fa-mobile-phone"></i>Devices</a>
+                            </li>
+                            <li class="active">
+                                <a href="plans"><i class="fa fa-fw  fa-money"></i> Plan</a>
+                            </li>
+                            <%}%>
     </div>
     <!-- /.navbar-collapse -->
 </nav>
