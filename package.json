@@ -22,9 +22,10 @@
         "whatwg-fetch": "2.0.3",
         "sha.js": "~2.4.8",
         "express-session": "1.15.5",
-        "base64-img": "1.0.3"
+        "base64-img": "1.0.3",
+        "fs": "0.0.1-security"
     },
-    "description": "Dashboard template with bootstrap",
+    "description": "Web Application for WeTraq",
     "main": "server.js",
     "repository": {
         "type": "git",

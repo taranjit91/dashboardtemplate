@@ -45,16 +45,10 @@
                             <div class="row">
                                 <div class="input-group">
                                     <input type="hidden" id="deviceids_json" name="deviceids_json">
-                                    <input id='checked_devices' name='unchecked_devices'>
+                                    <input id='checked_devices' name='checked_devices'>
                                     <input type="hidden" id='unchecked_devices' name='unchecked_devices' value="abc" />
                                     <label for="sel1">Select radius for Geofence in KMS:</label>
-                                    <!--   <select name="radius" class="form-control" id="sel1">
-                                                <option>1</option>
-                                 <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                    </select> -->
+
                                 </div>
                                 <br>
                             </div>
@@ -172,9 +166,9 @@
 
         function updateJSONArrays(checked_items, unchecked_items) {
             console.log("function update called::: ");
-            $('#checked_devices').html(JSON.stringify(checked_items, null, '\t'));
+            $('#checked_devices').val(JSON.stringify(checked_items, null, ''));
 
-            $('#unchecked_devices').val(JSON.stringify(unchecked_items, null, '\t'));
+            $('#unchecked_devices').val(JSON.stringify(unchecked_items, null, ''));
         }
     </script>
     <script>
@@ -183,8 +177,8 @@
 
         var seekbar = new Seekbar.Seekbar({
             renderTo: "#seekbar-container-blue",
-            minValue: .500,
-            maxValue: 15,
+            minValue: 0.25,
+            maxValue: 2.5,
             valueListener: function(value) {
                 this.setValue(Math.round(value));
                 $('#seekbar-val').val((Math.round(value * 1000) / 1000));
@@ -196,7 +190,7 @@
             thumbColor: '#cc0000ff',
             negativeColor: '#0000ff',
             positiveColor: '#CCC',
-            value: 3
+            value: 2
         });
         $('#seekbar-val').val((Math.round(seekbar.value * 1000) / 1000));
 
