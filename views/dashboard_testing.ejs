@@ -74,6 +74,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td class="text-center">
+                                                    <label class="switch">
+                                                                        
+                                                                        <input class="aq" id="selectAll"  type="checkbox" >
+                                                                          <span class="slider round"></span>
+                                                                      </label>
+
+                                                </td>
+                                            </tr>
                                             <% for (let count = 0; count < devices.length; count++) { %>
 
                                                 <tr>
@@ -121,6 +132,21 @@
     </script>
     <link rel="stylesheet" type="text/css" href="./stylesheets/seekbar.css" />
     <script>
+        var $delCBs = $("#selectAll").click(function() {
+                var checkedCount = $delCBs.filter(":checked").length;
+                $delBtn.prop("disabled", checkedCount === 0);
+                if (checkedCount === 0)
+                    $toggleCB.prop("checked", false);
+                else if (checkedCount == $delCBs.length)
+                    $toggleCB.prop("checked", true);
+            }),
+            $toggleCB = $("#togglechbx").click(function() {
+                $delCBs.prop("checked", this.checked);
+                $delBtn.prop("disabled", !this.checked);
+            });
+
+
+
         var checked_items = [];
         var unchecked_items = [];
 
