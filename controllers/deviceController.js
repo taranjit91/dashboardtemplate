@@ -221,8 +221,5 @@ module.exports.AddNewDevice = (req, res) => {
         });
     });
 
-    function updateGeofencingOff()
-    {
-        
-    }
+
 }

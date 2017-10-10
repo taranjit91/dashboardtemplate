@@ -46,12 +46,7 @@ module.exports.DisplayEdit = (req, res) => {
             email: session.email
 
         });
-        // } else {
-        //     return res.render('./error', {
-        //         title: "error",
-        //         message: jsonResponse.error.msg
-        //     });
-        //  }
+
     }).catch(function(error) {
         return res.render('./error', {
             title: "error",

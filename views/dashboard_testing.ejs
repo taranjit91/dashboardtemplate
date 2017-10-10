@@ -12,7 +12,7 @@
 <body>
     <div id="page-wrapper" class="vert">
 
-        <div class="container-fluid">
+        <div class="container">
 
             <!-- Page Heading -->
             <div class="row">
@@ -22,11 +22,11 @@
 
                     </div>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-9" style="background:white;">
 
                     <!-- Page Heading -->
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
                             <h2 class="page-header">
                                 <%= title %>
                             </h2>
@@ -36,56 +36,62 @@
 
 
                     <form method="post">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                 <% include ./partials/map.ejs %>
+                        <div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <% include ./partials/map.ejs %>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-group">
-                                <input type="hidden" id="deviceids_json" name="deviceids_json">
-                                <label id='checked_devices'></label>
-                                <input type="text" id='unchecked_devices' value="abc"/>
-                                <label for="sel1">Select radius for Geofence in KMS:</label>
-                                <!--   <select name="radius" class="form-control" id="sel1">
-                                                <option>1</option>
-                                 <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                    </select> -->
-                            </div>
-                            <br>
-                            <div id="seekbar-container-blue" style="width:500px;height:30px"></div>
+                            <div class="row">
+                                <div class="input-group">
+                                    <input type="hidden" id="deviceids_json" name="deviceids_json">
+                                    <input id='checked_devices' name='checked_devices'>
+                                    <input type="hidden" id='unchecked_devices' name='unchecked_devices' value="abc" />
+                                    <label for="sel1">Select radius for Geofence in KMS:</label>
 
-                            <input name="seekbar_val" id="seekbar-val">
-                            <h3 class="purpleText verticalSpace">Select Devices</h3>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="row">
+                                <div id="seekbar-container-blue" style="width:500px;height:30px"></div>
+                            </div>
+                            <div class="row">
+                                <input name="seekbar_val" id="seekbar-val">
+                                <h3 class="purpleText verticalSpace">Turn On/Off geofencing for devices</h3>
+                            </div>
                             <div class="row">
                                 <input name='lat' id='lat' type="hidden">
                                 <input name='longi' id='longi' type="hidden">
                             </div>
-                           
-                            <div class="col-lg-12">
-                                <div class="well verticalSpace">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-striped ">
-                                            <thead>
+                            <div class="row">
+                                <div class="table-responsive col-sm-12" style="width: 100%;">
+                                    <table class="table table-bordered table-striped ">
+                                        <thead>
+                                            <tr>
+                                                <th>Device name</th>
+                                                <th class="text-center">Geofence</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td class="text-center">
+                                                    <label class="switch">
+                                                                        
+                                                                        <input class="aq" id="selectAll"  type="checkbox" >
+                                                                          <span class="slider round"></span>
+                                                                      </label>
+
+                                                </td>
+                                            </tr>
+                                            <% for (let count = 0; count < devices.length; count++) { %>
                                                 <tr>
-                                                    <th>Device name</th>
-                                                    <th class="text-center">Geofence</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% for (let count = 0; count < devices.length; count++) { %>
-
-                                                    <tr>
-                                                        <td>
-
-                                                            <%= devices[count].device_name %>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <label class="switch">
+                                                    <td>
+                                                        <%= devices[count].device_name %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <label class="switch">
                                                                         <%if(devices[count].geofencing ==true){ %>
                                                                         <input class="aq" id=<%=devices[count].device_iccid %> onclick="reply_click(this.id)" type="checkbox" checked>
                                                                         <% } else {%>
@@ -93,14 +99,12 @@
                                                                             <% } %>
                                                                         <span class="slider round"></span>
                                                                       </label>
-
-                                                        </td>
-                                                        <% }%>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
+                                                    </td>
+                                                    <% }%>
+                                        </tbody>
+                                    </table>
                                 </div>
+
                             </div>
                             <button class=" btn-success btn-lg ">Submit</button>
                     </form>
@@ -110,7 +114,8 @@
 
             </div>
         </div>
-        <!-- /.container-fluid -->
+    </div>
+    <!-- /.container-fluid -->
 
 
 
@@ -124,104 +129,97 @@
     </script>
     <link rel="stylesheet" type="text/css" href="./stylesheets/seekbar.css" />
     <script>
-        var checked_items=[];
-        var unchecked_items=[];
-
-       $ (function() {
-   // your page initialization code here
-   // the DOM will be available here
-   $(".aq:checked").each(function(){
-     //  console.log($(this).attr('id'));
-         //  alert($(this).attr('id'));
-         var id =$(this).attr('id');
-         checked_items.push(id);
-        });
-        $(".aq:not(:checked)").each(function(){
-              console.log($(this).attr('id'));
-              var id =$(this).attr('id');
-         unchecked_items.push(id);
-               });
-               updateJSONArrays(checked_items,unchecked_items);
+        var $delCBs = $("#selectAll").click(function() {
+                var checkedCount = $delCBs.filter(":checked").length;
+                $delBtn.prop("disabled", checkedCount === 0);
+                if (checkedCount === 0)
+                    $toggleCB.prop("checked", false);
+                else if (checkedCount == $delCBs.length)
+                    $toggleCB.prop("checked", true);
+            }),
+            $toggleCB = $("#togglechbx").click(function() {
+                $delCBs.prop("checked", this.checked);
+                $delBtn.prop("disabled", !this.checked);
             });
-     function reply_click(clicked_id)
-        {
+        var checked_items = [];
+        var unchecked_items = [];
+        $(function() {
+            // your page initialization code here
+            // the DOM will be available here
+            $(".aq:checked").each(function() {
+                //  console.log($(this).attr('id'));
+                //  alert($(this).attr('id'));
+                var id = $(this).attr('id');
+                checked_items.push(id);
+            });
+            $(".aq:not(:checked)").each(function() {
+                console.log($(this).attr('id'));
+                var id = $(this).attr('id');
+                unchecked_items.push(id);
+            });
+            updateJSONArrays(checked_items, unchecked_items);
+        });
+        function reply_click(clicked_id) {
             var id = clicked_id;
-           var value= document.getElementById(id).checked;
-            if(value)
-            {
-                if(checked_items.indexOf(id) == -1)
-                {
+            var value = document.getElementById(id).checked;
+            if (value) {
+                if (checked_items.indexOf(id) == -1) {
                     checked_items.push(id);
-                    unchecked_items.splice(unchecked_items.indexOf(id),1);
+                    unchecked_items.splice(unchecked_items.indexOf(id), 1);
                 }
                 console.log("@@@@@@@checekd ############");
-            }else{
-                if(unchecked_items.indexOf(id)== -1)
-                {
+            } else {
+                if (unchecked_items.indexOf(id) == -1) {
                     unchecked_items.push(id);
-                    checked_items.splice(checked_items.indexOf(id),1);
-                    console.log(")))))))))))))))"+id);
+                    checked_items.splice(checked_items.indexOf(id), 1);
+                    console.log(")))))))))))))))" + id);
                 }
                 console.log("not checked &&& ############");
             }
             console.log("called ############");
             console.log(checked_items.toString());
-            updateJSONArrays(checked_items,unchecked_items);
+            updateJSONArrays(checked_items, unchecked_items);
         }
-  // });
-
-  function updateJSONArrays(checked_items,unchecked_items)
-  {
-      console.log("function update called::: ");
-      $('#checked_devices').html(JSON.stringify(checked_items, null, '\t'));
-   
-    $('#unchecked_devices').val(JSON.stringify(unchecked_items, null, '\t'));
-  }
+        // });
+        function updateJSONArrays(checked_items, unchecked_items) {
+            console.log("function update called::: ");
+            $('#checked_devices').val(JSON.stringify(checked_items, null, ''));
+            $('#unchecked_devices').val(JSON.stringify(unchecked_items, null, ''));
+        }
     </script>
     <script>
         var circles = []; // store all circles in array 
         var map;
-
         var seekbar = new Seekbar.Seekbar({
             renderTo: "#seekbar-container-blue",
-            minValue: .500,
-            maxValue: 15,
+            minValue: 0.25,
+            maxValue: 2.5,
             valueListener: function(value) {
                 this.setValue(Math.round(value));
                 $('#seekbar-val').val((Math.round(value * 1000) / 1000));
                 updateRadius((Math.round(value * 1000) / 1000));
-
             },
             barSize: 4,
             needleSize: 0.5,
             thumbColor: '#cc0000ff',
             negativeColor: '#0000ff',
             positiveColor: '#CCC',
-            value: 3
+            value: 2
         });
         $('#seekbar-val').val((Math.round(seekbar.value * 1000) / 1000));
-
         function initMap() {
             var htmString = document.getElementById('devicesJson').innerHTML;
             var json = JSON.parse(htmString);
             var devicess = json.user.device;
-
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay = new google.maps.DirectionsRenderer;
-
-
-
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 13,
                 center: {
-
                     lat: 43.772959,
                     lng: -79.257609
                 }
-
             });
-
-
             var cityCircle = new google.maps.Circle({
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,
@@ -235,8 +233,6 @@
                 },
                 radius: Math.round($('#seekbar-val').val()) * 1000
             });
-
-
             circles.push(cityCircle);
             var marker1 = new google.maps.Marker({
                 position: {
@@ -248,7 +244,6 @@
                 title: "Geofence Center"
             });
             marker1.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
-
             for (count = 0; count < devicess.length; count++) {
                 if (devicess[count].report.length > 0) { // add marker if it exist in report
                     var myLatLng = {
@@ -257,19 +252,15 @@
                     };
                     var marker = new google.maps.Marker({
                         position: myLatLng,
-
                         map: map,
                         title: devicess[count].device_name
                     });
                 }
             }
-
-
             google.maps.event.addListener(marker1, 'drag', function(event) {
                 console.debug('new position is ' + event.latLng.lat() + ' / ' + event.latLng.lng());
             });
             google.maps.event.addListener(marker1, 'dragend', function(event) {
-
                 for (i = 0; i < circles.length; i++) {
                     circles[i].setMap(null);
                 }
@@ -291,9 +282,6 @@
                 });
                 circles.push(cityCircle);
             });
-
-
-
             function geocodePosition(pos) {
                 geocoder = new google.maps.Geocoder();
                 geocoder.geocode({
@@ -310,14 +298,11 @@
                 );
             }
         }
-
         $(document).ready(function() {
-
             getLocation();
         });
         $(function() {
             $('.list-group.checked-list-box .list-group-item').each(function() {
-
                 // Settings
                 var $widget = $(this),
                     $checkbox = $('<input type="checkbox" class="hidden" />'),
@@ -331,15 +316,9 @@
                             icon: 'glyphicon glyphicon-unchecked'
                         }
                     };
-
                 //  $widget.css('cursor', 'pointer')
-
-
                 //   console.log(">> " + $widget.);
-
-
                 $widget.append($checkbox);
-
                 // Event Handlers
                 $widget.on('click', function() {
                     $checkbox.prop('checked', !$checkbox.is(':checked'));
@@ -353,15 +332,12 @@
                 // Actions
                 function updateDisplay() {
                     var isChecked = $checkbox.is(':checked');
-
                     // Set the button's state
                     $widget.data('state', (isChecked) ? "on" : "off");
-
                     // Set the button's icon
                     $widget.find('.state-icon')
                         .removeClass()
                         .addClass('state-icon ' + settings[$widget.data('state')].icon);
-
                     // Update the button's color
                     if (isChecked) {
                         $widget.addClass(style + color + ' active');
@@ -377,16 +353,12 @@
                     console.log(checkedItems);
                     $('#deviceids_json').val(JSON.stringify(checkedItems, null, 0));
                 }
-
                 // Initialization
                 function init() {
-
                     if ($widget.data('checked') == true) {
                         $checkbox.prop('checked', !$checkbox.is(':checked'));
                     }
-
                     updateDisplay();
-
                     // Inject the icon if applicable
                     if ($widget.find('.state-icon').length == 0) {
                         $widget.prepend('<span class="state-icon ' + settings[$widget.data('state')].icon + '"></span>');
@@ -394,7 +366,6 @@
                 }
                 init();
             });
-
             $('#get-checked-data').on('click', function(event) {
                 event.preventDefault();
                 var checkedItems = {},
@@ -406,8 +377,6 @@
                 $('#deviceids_json').val(JSON.stringify(checkedItems, null, '\t'));
             });
         });
-
-
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
@@ -415,7 +384,6 @@
                 Console.log("Geolocation is not supported by this browser.");
             }
         }
-
         function updateRadius(rad) {
             console.log(circles.length + " >> ");
             for (i = 0; i < circles.length; i++) {
@@ -425,15 +393,10 @@
             var newCircle = circles;
             circles[0].setMap(null);
             circles = [];
-
             circles = newCircle;
             circles[0].setMap(map);
         }
-
-
-
         function showPosition(position) {
-
             //  Console.log("Latitude: " + position.coords.latitude +
             //      "<br>Longitude: " + position.coords.longitude);
             $('#lat').val(position.coords.latitude);
