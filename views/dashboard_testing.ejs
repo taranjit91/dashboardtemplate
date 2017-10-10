@@ -65,7 +65,7 @@
                             </div>
                             <div class="row">
                                 <div class="table-responsive col-sm-12" style="width: 100%;">
-                                    <table class="table table-bordered table-striped ">
+                                    <table class="table table-bordered table-striped example">
                                         <thead>
                                             <tr>
                                                 <th>Device name</th>
@@ -79,7 +79,7 @@
                                                 <td class="text-center">
                                                     <label class="switch">
                                                                         
-                                                                        <input class="aq" id="selectAll"  type="checkbox" >
+                                                                        <input  id="selectAll"  type="checkbox" >
                                                                           <span class="slider round"></span>
                                                                       </label>
 
@@ -93,9 +93,9 @@
                                                     <td class="text-center">
                                                         <label class="switch">
                                                                         <%if(devices[count].geofencing ==true){ %>
-                                                                        <input class="aq" id=<%=devices[count].device_iccid %> onclick="reply_click(this.id)" type="checkbox" checked>
+                                                                        <input class="aq" name = "check" id=<%=devices[count].device_iccid %> onclick="reply_click(this.id)" type="checkbox" checked>
                                                                         <% } else {%>
-                                                                            <input class="aq"  id=<%=devices[count].device_iccid %>  onclick="reply_click(this.id)" type="checkbox" >
+                                                                            <input class="aq" name = "check" id=<%=devices[count].device_iccid %>  onclick="reply_click(this.id)" type="checkbox" >
                                                                             <% } %>
                                                                         <span class="slider round"></span>
                                                                       </label>
@@ -129,36 +129,40 @@
     </script>
     <link rel="stylesheet" type="text/css" href="./stylesheets/seekbar.css" />
     <script>
-        var $delCBs = $("#selectAll").click(function() {
-                var checkedCount = $delCBs.filter(":checked").length;
-                $delBtn.prop("disabled", checkedCount === 0);
-                if (checkedCount === 0)
-                    $toggleCB.prop("checked", false);
-                else if (checkedCount == $delCBs.length)
-                    $toggleCB.prop("checked", true);
-            }),
-            $toggleCB = $("#togglechbx").click(function() {
-                $delCBs.prop("checked", this.checked);
-                $delBtn.prop("disabled", !this.checked);
-            });
         var checked_items = [];
         var unchecked_items = [];
-        $(function() {
-            // your page initialization code here
-            // the DOM will be available here
-            $(".aq:checked").each(function() {
+        $(function () {
+
+            $("#selectAll").click(function () {
+                if (this.checked) // if select all 
+                {
+                    checkboxes = document.getElementsByName('check');
+                    for (var i = 0, n = checkboxes.length; i < n; i++) {
+                        checkboxes[i].checked = true;
+                    }
+                } else {
+                    checkboxes = document.getElementsByName('check');
+                    for (var i = 0, n = checkboxes.length; i < n; i++) {
+                        checkboxes[i].checked = false;
+                    }
+                }
+                console.log("checked" + this.checked);
+            });
+
+            $(".aq:checked").each(function () {
                 //  console.log($(this).attr('id'));
                 //  alert($(this).attr('id'));
                 var id = $(this).attr('id');
                 checked_items.push(id);
             });
-            $(".aq:not(:checked)").each(function() {
+            $(".aq:not(:checked)").each(function () {
                 console.log($(this).attr('id'));
                 var id = $(this).attr('id');
                 unchecked_items.push(id);
             });
             updateJSONArrays(checked_items, unchecked_items);
         });
+
         function reply_click(clicked_id) {
             var id = clicked_id;
             var value = document.getElementById(id).checked;
@@ -194,7 +198,7 @@
             renderTo: "#seekbar-container-blue",
             minValue: 0.25,
             maxValue: 2.5,
-            valueListener: function(value) {
+            valueListener: function (value) {
                 this.setValue(Math.round(value));
                 $('#seekbar-val').val((Math.round(value * 1000) / 1000));
                 updateRadius((Math.round(value * 1000) / 1000));
@@ -207,6 +211,7 @@
             value: 2
         });
         $('#seekbar-val').val((Math.round(seekbar.value * 1000) / 1000));
+
         function initMap() {
             var htmString = document.getElementById('devicesJson').innerHTML;
             var json = JSON.parse(htmString);
@@ -257,10 +262,10 @@
                     });
                 }
             }
-            google.maps.event.addListener(marker1, 'drag', function(event) {
+            google.maps.event.addListener(marker1, 'drag', function (event) {
                 console.debug('new position is ' + event.latLng.lat() + ' / ' + event.latLng.lng());
             });
-            google.maps.event.addListener(marker1, 'dragend', function(event) {
+            google.maps.event.addListener(marker1, 'dragend', function (event) {
                 for (i = 0; i < circles.length; i++) {
                     circles[i].setMap(null);
                 }
@@ -282,27 +287,35 @@
                 });
                 circles.push(cityCircle);
             });
+
             function geocodePosition(pos) {
                 geocoder = new google.maps.Geocoder();
                 geocoder.geocode({
                         latLng: pos
                     },
-                    function(results, status) {
+                    function (results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
-                            //$("#mapSearchInput").val(results[0].formatted_address);
-                            // $("#mapErrorMsg").hide(100);
+
                         } else {
-                            // $("#mapErrorMsg").html('Cannot determine address at this location.'+status).show(100);
+
                         }
                     }
                 );
             }
         }
-        $(document).ready(function() {
+        $(document).ready(function () {
             getLocation();
+            $('body').on('click', '#selectAll', function () {
+                if ($(this).hasClass('allChecked')) {
+                    $('input[type="checkbox"]', '#example').prop('checked', false);
+                } else {
+                    $('input[type="checkbox"]', '#example').prop('checked', true);
+                }
+                $(this).toggleClass('allChecked');
+            })
         });
-        $(function() {
-            $('.list-group.checked-list-box .list-group-item').each(function() {
+        $(function () {
+            $('.list-group.checked-list-box .list-group-item').each(function () {
                 // Settings
                 var $widget = $(this),
                     $checkbox = $('<input type="checkbox" class="hidden" />'),
@@ -320,12 +333,12 @@
                 //   console.log(">> " + $widget.);
                 $widget.append($checkbox);
                 // Event Handlers
-                $widget.on('click', function() {
+                $widget.on('click', function () {
                     $checkbox.prop('checked', !$checkbox.is(':checked'));
                     $checkbox.triggerHandler('change');
                     updateDisplay();
                 });
-                $checkbox.on('change', function() {
+                $checkbox.on('change', function () {
                     updateDisplay();
                 });
                 // Actions
@@ -346,7 +359,7 @@
                     }
                     var checkedItems = [],
                         counter = 0;
-                    $("#check-list-box li.active label").each(function(idx, label) { // select ids in array
+                    $("#check-list-box li.active label").each(function (idx, label) { // select ids in array
                         checkedItems[counter] = $(label).text().trim().replace("\n ", "");
                         counter++;
                     });
@@ -361,22 +374,24 @@
                     updateDisplay();
                     // Inject the icon if applicable
                     if ($widget.find('.state-icon').length == 0) {
-                        $widget.prepend('<span class="state-icon ' + settings[$widget.data('state')].icon + '"></span>');
+                        $widget.prepend('<span class="state-icon ' + settings[$widget.data('state')].icon +
+                            '"></span>');
                     }
                 }
                 init();
             });
-            $('#get-checked-data').on('click', function(event) {
+            $('#get-checked-data').on('click', function (event) {
                 event.preventDefault();
                 var checkedItems = {},
                     counter = 0;
-                $("#check-list-box li.active ").each(function(idx, li) {
+                $("#check-list-box li.active ").each(function (idx, li) {
                     checkedItems[counter] = $(li).text();
                     counter++;
                 });
                 $('#deviceids_json').val(JSON.stringify(checkedItems, null, '\t'));
             });
         });
+
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
@@ -384,6 +399,7 @@
                 Console.log("Geolocation is not supported by this browser.");
             }
         }
+
         function updateRadius(rad) {
             console.log(circles.length + " >> ");
             for (i = 0; i < circles.length; i++) {
@@ -396,6 +412,7 @@
             circles = newCircle;
             circles[0].setMap(map);
         }
+
         function showPosition(position) {
             //  Console.log("Latitude: " + position.coords.latitude +
             //      "<br>Longitude: " + position.coords.longitude);
