@@ -68,6 +68,12 @@ a {
 #base {
     display: none;
 }
+#checked_devices{
+    display: none;
+}
+#unchecked_devices{
+    display: none;
+}
 
 .white {
     color: white;
