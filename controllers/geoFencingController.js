@@ -5,7 +5,7 @@ var usersController = require('./userController.js');
 
 module.exports.DisplayPage = (req, res) => {
     var session = req.session;
-    return res.render('./dashboard_testing', {
+    return res.render('./dashboard_user', {
         title: ' Geofencing',
         devices: session.devices,
         email: session.email,
@@ -25,7 +25,7 @@ module.exports.UpdateBulkGeoFencing = (req, res) => {
     var devicearray_off = req.body.unchecked_devices;
     var lat = req.body.lat;
     var longi = req.body.longi;
-    if (lat == null || longi == null) {
+    if (lat == null || longi == null || lat == "" || longi== "") {
         lat = 43.7854787;
         longi = -79.2268406;
     }
@@ -46,7 +46,7 @@ module.exports.UpdateBulkGeoFencing = (req, res) => {
 
 
     console.log("body ::: " + device_arrayy);
-    // update device schedule
+    //update device schedule
     fetch('http://api.wetraq.ca/device/geofence', {
         method: 'PATCH',
         headers: {
@@ -54,7 +54,6 @@ module.exports.UpdateBulkGeoFencing = (req, res) => {
             'cookie': session.c
         },
         credentials: 'same-origin',
-        //  body: '{ "device":         { "geofencing": true, "geofence_radius":' + radius + ', "geofence_latitude": 43.890975,          "geofence_longitude": -79.23227 },          "device_list": ["00000000000000000003", "00000000000000000002"] }'
         body: device_arrayy
     }).then(function(response) {
         var responseStatus = response.status;

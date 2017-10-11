@@ -2,28 +2,9 @@
     <form method="post">
 
         <div class="row">
-            <!--      <div class="weekDays-selector">
-                <h4 class="text_black">
-                    Select Days </h4>
-                <h5 id="deviceids-json"></h5>
-                <h5 id="days-json"></h5>
-                <input type="checkbox" id="weekday-mon" class="weekday" />
-                <label for="weekday-mon">Mon</label>
-                <input type="checkbox" id="weekday-tue" class="weekday" />
-                <label for="weekday-tue">Tues</label>
-                <input type="checkbox" id="weekday-wed" class="weekday" />
-                <label for="weekday-wed">Wed</label>
-                <input type="checkbox" id="weekday-thu" class="weekday" />
-                <label for="weekday-thu">Thurs</label>
-                <input type="checkbox" id="weekday-fri" class="weekday" />
-                <label for="weekday-fri">Fri</label>
-                <input type="checkbox" id="weekday-sat" class="weekday" />
-                <label for="weekday-sat">Sat</label>
-                <input type="checkbox" id="weekday-sun" class="weekday" />
-                <label for="weekday-sun">Sun<un/label>
-
-           
-        </div><!-- weekDays-selector ends-->-->
+                <input id='checked_devices' name='checked_devices'>
+                <input type="hidden" id='unchecked_devices' name='unchecked_devices' value="abc" />
+                
             <br>
             <br>
             <br>
@@ -142,34 +123,50 @@
         </select>
             </div>
         </div>
-        <!--     <div class="input-group bootstrap-timepicker timepicker">
-            <input id="timepicker1" name="timepicker1" type="text" class="form-control input-small">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-        </div>
-        <br/>
-        <label>To: </label>
-        <div class="input-group bootstrap-timepicker timepicker">
-            <input id="timepicker2" name="timepicker2" type="text" class="form-control input-small">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-        </div>-->
+        
         <br/>
         <br/>
         <div class="col-lg-12">
-            <div class="well verticalSpace">
-                <ul id="check-list-box" class="list-group checked-list-box">
-                    <% for (let count = 0; count < devices.length; count++) { %>
-                        <!--         <a href="/device/<%= devices[count].device_iccid %>" class="list-group-item list-group-item-action">
-                        <%= devices[count].device_name %>
-                    </a> -->
-                        <li class="list-group-item">
-                            <%= devices[count].device_name %>
-                                <label class="text_transparent">
-                                <%= devices[count].device_iccid %>
-                                    </label>
-                        </li>
+            <div class="table-responsive col-sm-12" style="width: 100%;">
+                <table class="table table-bordered table-striped example">
+                    <thead>
+                        <tr>
+                            <th>Device name</th>
+                            <th class="text-center">Geofence</th>
 
-                        <% } %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td class="text-center">
+                                <label class="switch">
+                                                    
+                                                    <input  id="selectAll"  type="checkbox" >
+                                                      <span class="slider round"></span>
+                                                  </label>
 
+                            </td>
+                        </tr>
+                        <% for (let count = 0; count < devices.length; count++) { %>
+                            <tr>
+                                <td>
+                                    <%= devices[count].device_name %>
+                                </td>
+                                <td class="text-center">
+                                    <label class="switch">
+                                                    <%if(devices[count].is_reporting ==true){ %>
+                                                    <input class="aq" name = "check" id=<%=devices[count].device_iccid %> onclick="reply_click(this.id)" type="checkbox" checked>
+                                                    <% } else {%>
+                                                        <input class="aq" name = "check" id=<%=devices[count].device_iccid %>  onclick="reply_click(this.id)" type="checkbox" >
+                                                        <% } %>
+                                                    <span class="slider round"></span>
+                                                  </label>
+                                </td>
+                                <% }%>
+                    </tbody>
+                </table>
+            </div>
             </div>
 
             <button class=" btn-success btn-lg ">Submit</button>
@@ -187,20 +184,66 @@
             <script src="/javascripts/jquery.js ">
             </script>
 
-            <!--      <script src="/javascripts/bootstrap-timepicker.min.js ">
-            </script>
+            <script>
+                var checked_items = [];
+        var unchecked_items = [];
+        $(function () {
+            $("#selectAll").click(function () {
+                if (this.checked) // if select all 
+                {
+                    checkboxes = document.getElementsByName('check');
+                    for (var i = 0, n = checkboxes.length; i < n; i++) {
+                        checkboxes[i].checked = true;
+                    }
+                } else {
+                    checkboxes = document.getElementsByName('check');
+                    for (var i = 0, n = checkboxes.length; i < n; i++) {
+                        checkboxes[i].checked = false;
+                    }
+                }
+                console.log("checked" + this.checked);
+            });
 
+            $(".aq:checked").each(function () {
+                //  console.log($(this).attr('id'));
+                //  alert($(this).attr('id'));
+                var id = $(this).attr('id');
+                checked_items.push(id);
+            });
+            $(".aq:not(:checked)").each(function () {
+                console.log($(this).attr('id'));
+                var id = $(this).attr('id');
+                unchecked_items.push(id);
+            });
+            updateJSONArrays(checked_items, unchecked_items);
+        });
 
-
-
-
-            <script type="text/javascript">
-                $('#timepicker1').timepicker({
-                    showInputs: true
-                });
-                $('#timepicker2').timepicker({
-                    showInputs: true
-                });
-            </script>-->
+        function reply_click(clicked_id) {
+            var id = clicked_id;
+            var value = document.getElementById(id).checked;
+            if (value) {
+                if (checked_items.indexOf(id) == -1) {
+                    checked_items.push(id);
+                    unchecked_items.splice(unchecked_items.indexOf(id), 1);
+                }
+                console.log("@@@@@@@checekd ############");
+            } else {
+                if (unchecked_items.indexOf(id) == -1) {
+                    unchecked_items.push(id);
+                    checked_items.splice(checked_items.indexOf(id), 1);
+                    console.log(")))))))))))))))" + id);
+                }
+                console.log("not checked &&& ############");
+            }
+            console.log("called ############");
+            console.log(checked_items.toString());
+            updateJSONArrays(checked_items, unchecked_items);
+        }
+        // });
+        function updateJSONArrays(checked_items, unchecked_items) {
+            console.log("function update called::: ");
+            $('#checked_devices').val(JSON.stringify(checked_items, null, ''));
+            $('#unchecked_devices').val(JSON.stringify(unchecked_items, null, ''));
+        }</script>
 
             </div>

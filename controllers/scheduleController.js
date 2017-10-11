@@ -21,7 +21,7 @@ module.exports.UpdateBulkSchedule = (req, res) => {
     var session = req.session;
     console.log('on updatre method &&& ');
     var days = req.body.days;
-    var devicearray = req.body.deviceids_json;
+    var devicearray = req.body.checked_devices;
     var freq = req.body.freq;
     var picker1 = req.body.timepicker1;
     var startTime, endTime;
